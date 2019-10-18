@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.faishze.api.fasizheapi.dao.ProfileMapper">
+  <resultMap id="BaseResultMap" type="com.faishze.api.fasizheapi.pojo.do0.Profile">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="full_name" jdbcType="VARCHAR" property="fullName" />
+    <result column="phone" jdbcType="CHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_profile
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.faishze.api.fasizheapi.pojo.do0.Profile">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_profile (user_id, gender, avatar_url, 
+      nick_name, full_name, phone, 
+      email, create_time, update_time
+      )
+    values (#{userId,jdbcType=INTEGER}, #{gender,jdbcType=CHAR}, #{avatarUrl,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR}, #{phone,jdbcType=CHAR}, 
+      #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.faishze.api.fasizheapi.pojo.do0.Profile">
+    update t_profile
+    set user_id = #{userId,jdbcType=INTEGER},
+      gender = #{gender,jdbcType=CHAR},
+      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      full_name = #{fullName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=CHAR},
+      email = #{email,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_id, gender, avatar_url, nick_name, full_name, phone, email, create_time, 
+    update_time
+    from t_profile
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_id, gender, avatar_url, nick_name, full_name, phone, email, create_time, 
+    update_time
+    from t_profile
+  </select>
+</mapper>

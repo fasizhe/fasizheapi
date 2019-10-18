@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.faishze.api.fasizheapi.dao.ReportReportTagMapper">
+  <resultMap id="BaseResultMap" type="com.faishze.api.fasizheapi.pojo.do0.ReportReportTag">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="report_id" jdbcType="INTEGER" property="reportId" />
+    <result column="report_tag_id" jdbcType="INTEGER" property="reportTagId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_report_report_tag
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.faishze.api.fasizheapi.pojo.do0.ReportReportTag">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_report_report_tag (report_id, report_tag_id, create_time
+      )
+    values (#{reportId,jdbcType=INTEGER}, #{reportTagId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.faishze.api.fasizheapi.pojo.do0.ReportReportTag">
+    update t_report_report_tag
+    set report_id = #{reportId,jdbcType=INTEGER},
+      report_tag_id = #{reportTagId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, report_id, report_tag_id, create_time
+    from t_report_report_tag
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, report_id, report_tag_id, create_time
+    from t_report_report_tag
+  </select>
+</mapper>
