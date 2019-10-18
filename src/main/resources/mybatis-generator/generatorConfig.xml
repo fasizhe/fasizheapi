@@ -10,6 +10,7 @@
     <!--classPathEntry:数据库的JDBC驱动,换成你自己的驱动位置 可选 -->
     <!--<classPathEntry location="D:\generator_mybatis\mysql-connector-java-5.1.24-bin.jar" /> -->
 
+
     <!-- 一个数据库一个context -->
     <!--defaultModelType="flat" 大数据字段，不分表 -->
     <context id="MysqlTables" targetRuntime="MyBatis3Simple" defaultModelType="flat">
@@ -26,15 +27,24 @@
         <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
         <!-- 格式化XML代码 -->
         <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
-        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
 
-        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+<!--        不生成序列化-->
+<!--        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />-->
+<!--不生成toString-->
+<!--        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />-->
+        <!--        通用mapper-->
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
+            <property name="caseSensitive" value="true"/>
+        </plugin>
 
         <!-- 注释 -->
         <commentGenerator >
             <property name="suppressAllComments" value="true"/><!-- 是否取消注释 -->
             <property name="suppressDate" value="false" /> <!-- 是否生成注释代时间戳-->
         </commentGenerator>
+
 
         <!-- jdbc连接 -->
         <jdbcConnection driverClass="${spring.datasource.driver-class-name}" connectionURL="${spring.datasource.url}" userId="${spring.datasource.username}" password="${spring.datasource.password}" />
@@ -43,6 +53,7 @@
             <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
+
 
         <!-- 生成实体类地址 -->
         <javaModelGenerator targetPackage="com.faishze.api.fasizheapi.pojo.do0" targetProject="${mybatis.project}" >
@@ -56,6 +67,8 @@
         <!-- 生成mapxml对应client，也就是接口dao -->
         <javaClientGenerator targetPackage="com.faishze.api.fasizheapi.dao" targetProject="${mybatis.project}" type="XMLMAPPER" >
             <property name="enableSubPackages" value="false" />
+<!--            继承通用mapper-->
+<!--            <property name="implementationPackage" value="com.faishze.api.fasizheapi.dao.BaseMapper"/>-->
         </javaClientGenerator>
         <!-- table可以有多个,每个数据库中的表都可以写一个table，tableName表示要匹配的数据库表,也可以在tableName属性中通过使用%通配符来匹配所有数据库表,只有匹配的表才会自动生成文件 -->
 
@@ -64,6 +77,8 @@
             <property name="useActualColumnNames" value="false" />
             <!-- 数据库表主键 -->
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <!--        删除表前缀-->
+            <domainObjectRenamingRule  searchString ="^T" replaceString =""/>
         </table>
     </context>
 </generatorConfiguration>
