@@ -15,7 +15,7 @@ public class FasizheApiApplication {
     }
     @RequestMapping("/")
     public String index(){
-        return "hello1";
+        return "hello";
     }
 
 }
