@@ -21,7 +21,7 @@ public class FasizheApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(FasizheApiApplication.class, args);
     }
-    @RequestMapping("/")
+    @RequestMapping("/getAll")
     public List<User> index(){
         return userMapper.selectAll();
     }
