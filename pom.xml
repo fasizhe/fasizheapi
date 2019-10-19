@@ -106,6 +106,10 @@
             <scope>compile</scope>
         </dependency>
         <!-- REST架构的约束hateoas，在这里只为了启动HTTP监控端点的需要 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
 
     </dependencies>
 
