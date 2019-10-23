@@ -1,8 +1,10 @@
 package com.faishze.api.fasizheapi.dao;
 
 import com.faishze.api.fasizheapi.pojo.do0.Profile;
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+@Repository
 public interface ProfileMapper {
     int deleteByPrimaryKey(Integer id);
 

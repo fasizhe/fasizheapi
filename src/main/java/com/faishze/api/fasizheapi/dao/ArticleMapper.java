@@ -1,8 +1,11 @@
 package com.faishze.api.fasizheapi.dao;
 
 import com.faishze.api.fasizheapi.pojo.do0.Article;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
+@Repository
 public interface ArticleMapper {
     int deleteByPrimaryKey(Integer id);
 

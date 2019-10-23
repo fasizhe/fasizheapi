@@ -12,7 +12,7 @@ public class ErrorResponse {
     /**
      * 错误码
      */
-    private String error;
+    private String errorCode;
 
     /**
      * 错误信息
@@ -23,30 +23,30 @@ public class ErrorResponse {
     }
 
     public ErrorResponse(String error, String message) {
-        this.error = error;
+        this.errorCode = error;
         this.message = message;
     }
 
-    public String getError() {
-        return error;
+    public String getErrorCode() {
+        return errorCode;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
     }
 
     public void setMessage(String message) {
         this.message = message;
     }
-
+    
     @Override
     public String toString() {
         return "ErrorResponse{" +
-                "error='" + error + '\'' +
+                "errorCode='" + errorCode + '\'' +
                 ", message='" + message + '\'' +
                 '}';
     }

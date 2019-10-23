@@ -41,7 +41,7 @@ public class Result<T> implements Serializable {
         this.data = data;
     }
 
-    private Result(Boolean success, ErrorCode errorCode) {
+    public Result(Boolean success, ErrorCode errorCode) {
         this(success);
         this.errorCode = errorCode;
     }
