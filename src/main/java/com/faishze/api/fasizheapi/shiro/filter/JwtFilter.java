@@ -64,7 +64,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
             Gson gson = new Gson();
-            String result = gson.toJson(new Result(false, ErrorCode.UNAUTHORIZED););
+            String result = gson.toJson(new Result(false, ErrorCode.UNAUTHORIZED));
             out.write(result);
         } catch (IOException e) {
             log.error(e.getMessage());
