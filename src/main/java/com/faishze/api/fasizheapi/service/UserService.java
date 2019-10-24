@@ -1,6 +1,9 @@
 package com.faishze.api.fasizheapi.service;
 
+import com.faishze.api.fasizheapi.pojo.ao.UserAO;
 import com.faishze.api.fasizheapi.pojo.do0.User;
+import com.faishze.api.fasizheapi.result.Result;
+import com.faishze.api.fasizheapi.shiro.token.Jwt;
 
 /**
  * @author masonluo
@@ -20,4 +23,6 @@ public interface UserService {
      * @return 匹配的用户
      */
     User get(User user);
+
+    Result<Jwt> login(UserAO user);
 }

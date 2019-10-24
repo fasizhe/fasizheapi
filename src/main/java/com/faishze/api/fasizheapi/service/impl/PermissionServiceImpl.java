@@ -21,4 +21,14 @@ public class PermissionServiceImpl implements PermissionService {
     public List<Permission> listByRoleName(String roleName) {
         return null;
     }
+
+    @Override
+    public List<String> listPermissionNameByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public List<String> listPermissionNameByRoleName(String RoleName) {
+        return null;
+    }
 }
