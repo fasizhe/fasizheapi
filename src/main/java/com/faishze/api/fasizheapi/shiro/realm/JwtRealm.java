@@ -1,13 +1,9 @@
 package com.faishze.api.fasizheapi.shiro.realm;
 
-import com.auth0.jwt.JWTVerifier;
-import com.faishze.api.fasizheapi.pojo.do0.Permission;
-import com.faishze.api.fasizheapi.pojo.do0.Role;
 import com.faishze.api.fasizheapi.pojo.do0.User;
 import com.faishze.api.fasizheapi.service.PermissionService;
 import com.faishze.api.fasizheapi.service.RoleService;
 import com.faishze.api.fasizheapi.service.UserService;
-import com.faishze.api.fasizheapi.shiro.token.Jwt;
 import com.faishze.api.fasizheapi.shiro.token.JwtToken;
 import com.faishze.api.fasizheapi.shiro.utils.JwtUtils;
 import org.apache.shiro.authc.AuthenticationException;

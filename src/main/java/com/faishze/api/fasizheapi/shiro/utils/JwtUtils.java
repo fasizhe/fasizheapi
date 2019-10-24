@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.faishze.api.fasizheapi.shiro.token.Jwt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -83,15 +84,19 @@ public class JwtUtils{
      * @param username 用户名
      * @return 返回一个jwt字符串
      */
-    public static String sign(String username){
+    public static Jwt sign(String username){
         try{
             Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
             Algorithm algorithm = Algorithm.HMAC256(secret);
             // 附带username信息
-            return JWT.create()
+            Jwt jwt = new Jwt();
+            jwt.setExpireTime(date);
+            jwt.setUsername(username);
+            jwt.setToken(JWT.create()
                     .withClaim("username", username)
                     .withExpiresAt(date)
-                    .sign(algorithm);
+                    .sign(algorithm));
+            return jwt;
         }catch (Exception e){
             log.error("sing jwt error", e.getMessage());
             return null;
@@ -105,7 +110,7 @@ public class JwtUtils{
      * @param token jwt
      * @return 签发的jwt
      */
-    public static String reSign(String token){
+    public static Jwt reSign(String token){
         String username = getUsername(token);
         if(!verify(token, username) && verify(token, username, LEE_WAY)){
             return sign(username);
