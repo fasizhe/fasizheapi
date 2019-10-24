@@ -1,16 +1,21 @@
 package com.faishze.api.fasizheapi.dao;
 
+import com.faishze.api.fasizheapi.dao.query.ArticleQuery;
 import com.faishze.api.fasizheapi.pojo.do0.Article;
-import java.util.List;
+import com.github.pagehelper.Page;
 
 public interface ArticleMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteArticle(Integer id);
 
-    int insert(Article record);
+    int saveArticle(Article record);
 
-    Article selectByPrimaryKey(Integer id);
+    Article getArticle(Integer id);
 
-    List<Article> selectAll();
+    Page<Article> listArticles();
 
-    int updateByPrimaryKey(Article record);
+    int updateArticle(Article record);
+
+    //按规则查询所有文章
+    Page<Article> listArticlesByQuery(ArticleQuery articleQuery);
+
 }

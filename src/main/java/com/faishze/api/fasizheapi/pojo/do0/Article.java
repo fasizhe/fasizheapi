@@ -1,5 +1,7 @@
 package com.faishze.api.fasizheapi.pojo.do0;
 
+import com.faishze.api.fasizheapi.constant.ArticleType;
+
 import java.util.Date;
 
 public class Article {
@@ -9,7 +11,7 @@ public class Article {
 
     private String title;
 
-    private String type;
+    private ArticleType type;
 
     private Integer likeNum;
 
@@ -51,12 +53,12 @@ public class Article {
         this.title = title == null ? null : title.trim();
     }
 
-    public String getType() {
+    public ArticleType getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
+    public void setType(ArticleType type) {
+        this.type = type;
     }
 
     public Integer getLikeNum() {
