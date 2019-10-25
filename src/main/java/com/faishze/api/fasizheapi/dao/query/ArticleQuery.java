@@ -14,11 +14,27 @@ public class ArticleQuery {
     public static final String COLLECTION_NUM="collection_num";
     public static final String VIEW_NUM="view_num";
     public static final String COMMENT_NUM="comment_num";
+    public static final String UPDATE_TIME="update_time";
+
     public static final String ASC="ASC";
     public static final String DESC="DESC";
+
+    private Boolean available;
     private Integer userId;
     private ArticleType type;
     private String orderField;
     private String orderType;
+
+    public ArticleQuery() {
+    }
+
+    public ArticleQuery(Boolean available, Integer userId, ArticleType type, String orderField, String orderType) {
+        this.available = available;
+        this.userId = userId;
+        this.type = type;
+        this.orderField = orderField;
+        this.orderType = orderType;
+    }
+
 
 }

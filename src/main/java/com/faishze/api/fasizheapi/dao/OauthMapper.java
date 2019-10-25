@@ -1,8 +1,11 @@
 package com.faishze.api.fasizheapi.dao;
 
 import com.faishze.api.fasizheapi.pojo.do0.Oauth;
+import org.apache.ibatis.annotations.Mapper;
+
 import java.util.List;
 
+@Mapper
 public interface OauthMapper {
     int deleteByPrimaryKey(Integer id);
 

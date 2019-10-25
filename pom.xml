@@ -114,6 +114,29 @@
         </dependency>
         <!-- REST架构的约束hateoas，在这里只为了启动HTTP监控端点的需要 -->
 
+        <!--        java8以上缺少的jar包-->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+        <groupId>javax.activation</groupId>
+        <artifactId>activation</artifactId>
+        <version>1.1.1</version>
+        </dependency>
+        <!--        java8以上缺少的jar包-->
+
     </dependencies>
 
     <build>

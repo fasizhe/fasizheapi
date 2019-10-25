@@ -5,9 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="type" jdbcType="CHAR" property="type"
-            javaType="com.faishze.api.fasizheapi.constant.ArticleType"
-            typeHandler="com.faishze.api.fasizheapi.typehandler.BaseEnumTypeHandler"/>
+    <result column="type" jdbcType="INTEGER" property="type"/>
     <result column="like_num" jdbcType="INTEGER" property="likeNum" />
     <result column="collection_num" jdbcType="INTEGER" property="collectionNum" />
     <result column="view_num" jdbcType="BIGINT" property="viewNum" />
@@ -29,7 +27,8 @@
       like_num, collection_num, view_num, 
       comment_num, available, create_time, 
       update_time, content)
-    values (#{userId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=CHAR}, 
+    values (#{userId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
+      #{type,jdbcType=INTEGER},
       #{likeNum,jdbcType=INTEGER}, #{collectionNum,jdbcType=INTEGER}, #{viewNum,jdbcType=BIGINT}, 
       #{commentNum,jdbcType=INTEGER}, #{available,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
@@ -38,7 +37,7 @@
     update t_article
     set user_id = #{userId,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
-      `type` = #{type,jdbcType=CHAR},
+      `type` = #{type,jdbcType=INTEGER},
       like_num = #{likeNum,jdbcType=INTEGER},
       collection_num = #{collectionNum,jdbcType=INTEGER},
       view_num = #{viewNum,jdbcType=BIGINT},
@@ -60,5 +59,26 @@
     available, create_time, update_time, content
     from t_article
   </select>
-  <select id="listArticlesByQuery" resultMap="BaseResultMap"></select>
+  <select id="listArticlesByQuery" parameterType="com.faishze.api.fasizheapi.dao.query.ArticleQuery" resultMap="BaseResultMap">
+    select id, user_id, title, `type`, like_num, collection_num, view_num, comment_num,
+    available, create_time, update_time, content
+    from t_article
+    <where>
+        <if test="available != null">
+            available = #{available}
+        </if>
+        <if test="userId != null">
+            AND user_id = #{userId}
+        </if>
+        <if test="type != null">
+            AND type = #{type}
+        </if>
+    </where>
+    <if test="orderField != null">
+        order by #{orderField}
+    </if>
+    <if test="orderType != null">
+        #{orderType}
+    </if>
+  </select>
 </mapper>
