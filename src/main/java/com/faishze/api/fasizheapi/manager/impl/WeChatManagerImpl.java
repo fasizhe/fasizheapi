@@ -1,5 +1,6 @@
 package com.faishze.api.fasizheapi.manager.impl;
 
+import com.faishze.api.fasizheapi.manager.WeChatManager;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,6 +10,6 @@ import org.springframework.stereotype.Component;
  * @email 827032783@qq.com
  * @create 2019-10-09
  */
-@Component("weChatManager")
-public class WeChatManagerImpl {
+@Component("weCharManager")
+public class WeChatManagerImpl implements WeChatManager {
 }

@@ -1,5 +1,6 @@
 package com.faishze.api.fasizheapi.controller;
 
+import com.faishze.api.fasizheapi.manager.WeChatManager;
 import com.faishze.api.fasizheapi.pojo.ao.UserAO;
 import com.faishze.api.fasizheapi.result.ErrorCode;
 import com.faishze.api.fasizheapi.result.Result;
@@ -18,9 +19,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TokenController {
 
-    @Autowired
-    public UserService userService;
+    private final UserService userService;
 
+    private final WeChatManager weChatManager;
+
+    @Autowired
+    public TokenController(UserService userService, WeChatManager weChatManager) {
+        this.userService = userService;
+        this.weChatManager = weChatManager;
+    }
+
+    /**
+     * 用户登录接口
+     * @param username 用户名
+     * @param password 密码
+     * @return 一个携带jwt的Token或者错误码
+     */
     @GetMapping("/token")
     public Result<Jwt> login(@RequestParam String username,
                              @RequestParam String password){
@@ -33,6 +47,4 @@ public class TokenController {
         UserAO user = new UserAO(username, password);
         return userService.login(user);
     }
-
-
 }
