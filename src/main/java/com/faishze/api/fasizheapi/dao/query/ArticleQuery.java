@@ -10,10 +10,12 @@ import com.faishze.api.fasizheapi.constant.ArticleType;
  */
 public class ArticleQuery {
 
+    public static final String ID="id";
     public static final String LIKE_NUM="like_num";
     public static final String COLLECTION_NUM="collection_num";
     public static final String VIEW_NUM="view_num";
     public static final String COMMENT_NUM="comment_num";
+    public static final String CREATE_TIME="create_time";
     public static final String UPDATE_TIME="update_time";
 
     public static final String ASC="ASC";

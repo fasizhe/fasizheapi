@@ -17,7 +17,7 @@ import java.sql.SQLException;
  * @contact 15521177704
  * @since 2019/10/25
  */
-@MappedJdbcTypes(JdbcType.INTEGER)
+@MappedJdbcTypes(JdbcType.CHAR)
 @MappedTypes(value = ArticleType.class)
 public class ArticleTypeHandler extends BaseTypeHandler<ArticleType> {
     @Override
