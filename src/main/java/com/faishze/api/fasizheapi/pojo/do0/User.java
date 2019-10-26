@@ -1,8 +1,12 @@
 package com.faishze.api.fasizheapi.pojo.do0;
 
+import org.apache.ibatis.type.Alias;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+@Alias("user")
+public class User implements Serializable {
     private Integer id;
 
     private String username;
@@ -14,6 +18,18 @@ public class User {
     private Date createTime;
 
     private Date updateTime;
+
+    public User() {
+    }
+
+    public User(Integer id, String username, String password, Boolean status, Date createTime, Date updateTime) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.status = status;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+    }
 
     public Integer getId() {
         return id;
