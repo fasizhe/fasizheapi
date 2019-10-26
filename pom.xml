@@ -67,6 +67,13 @@
             <version>1.3.1</version>
         </dependency>
 
+<!--        分页插件-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.10</version>
+        </dependency>
+
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
@@ -119,12 +126,16 @@
         </dependency>
         <!-- ftpclient -->
 
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.5</version>
         </dependency>
 
+
+
+        <!--        java8以上缺少的jar包-->
 
         <dependency>
             <groupId>javax.xml.bind</groupId>
@@ -142,6 +153,7 @@
             <version>2.3.0</version>
         </dependency>
         <dependency>
+
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
             <version>1.1.1</version>
@@ -154,6 +166,14 @@
             <version>6.2.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.github.dozermapper/dozer-core -->
+
+        <groupId>javax.activation</groupId>
+        <artifactId>activation</artifactId>
+        <version>1.1.1</version>
+        </dependency>
+        <!--        java8以上缺少的jar包-->
+
+
     </dependencies>
 
     <build>
