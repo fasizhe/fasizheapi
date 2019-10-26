@@ -2,7 +2,9 @@ package com.faishze.api.fasizheapi.controller.v1;
 
 import com.faishze.api.fasizheapi.dao.UserMapper;
 import com.faishze.api.fasizheapi.pojo.do0.User;
+import com.faishze.api.fasizheapi.pojo.vo.UserVO;
 import com.faishze.api.fasizheapi.service.FileService;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +29,13 @@ public class UserController {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private Mapper mapper;
+
     @RequestMapping("/test")
     public Object save(User user) {
         userMapper.insert(user);
-        return user;
+        return mapper.map(user, UserVO.class);
     }
 
     @RequestMapping("/test2")

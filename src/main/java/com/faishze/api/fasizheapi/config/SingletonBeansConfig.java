@@ -1,7 +1,9 @@
-package com.faishze.api.fasizheapi.constant;
+package com.faishze.api.fasizheapi.config;
 
 import com.faishze.api.fasizheapi.util.ftp.FTPClientTemplate;
 import com.google.gson.Gson;
+import org.dozer.DozerBeanMapperBuilder;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -60,5 +62,17 @@ public class SingletonBeansConfig {
                                                @Value("${ftp.password}") String password) {
         return new FTPClientTemplate(host, username, password);
     }
+
+
+    /**
+     * dozer配置
+     *
+     * @return Mapper
+     */
+    @Bean
+    public Mapper mapper() {
+        return DozerBeanMapperBuilder.buildDefault();
+    }
+
 
 }
