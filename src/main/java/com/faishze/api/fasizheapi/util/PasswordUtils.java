@@ -1,4 +1,4 @@
-package com.faishze.api.fasizheapi.utils;
+package com.faishze.api.fasizheapi.util;
 
 import org.springframework.util.DigestUtils;
 

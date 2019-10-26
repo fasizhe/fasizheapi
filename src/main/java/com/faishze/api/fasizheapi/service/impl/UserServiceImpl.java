@@ -8,7 +8,7 @@ import com.faishze.api.fasizheapi.result.Result;
 import com.faishze.api.fasizheapi.service.UserService;
 import com.faishze.api.fasizheapi.pojo.dto.Jwt;
 import com.faishze.api.fasizheapi.shiro.utils.JwtUtils;
-import com.faishze.api.fasizheapi.utils.PasswordUtils;
+import com.faishze.api.fasizheapi.util.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
