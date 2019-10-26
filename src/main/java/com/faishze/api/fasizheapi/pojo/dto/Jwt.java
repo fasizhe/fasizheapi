@@ -1,4 +1,4 @@
-package com.faishze.api.fasizheapi.shiro.token;
+package com.faishze.api.fasizheapi.pojo.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

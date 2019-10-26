@@ -3,7 +3,7 @@ package com.faishze.api.fasizheapi.service;
 import com.faishze.api.fasizheapi.pojo.ao.UserAO;
 import com.faishze.api.fasizheapi.pojo.do0.User;
 import com.faishze.api.fasizheapi.result.Result;
-import com.faishze.api.fasizheapi.shiro.token.Jwt;
+import com.faishze.api.fasizheapi.pojo.dto.Jwt;
 
 /**
  * @author masonluo

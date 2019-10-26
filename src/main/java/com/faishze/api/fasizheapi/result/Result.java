@@ -61,6 +61,31 @@ public class Result<T> implements Serializable {
         return new Result<>(true, "OK");
     }
 
+    public static Result invalidParameter(){
+        return invalidParameter(null);
+    }
+
+
+    public static Result invalidParameter(String message){
+        Result result = new Result(false, ErrorCode.INVALID_PARAMETER);
+        if(message != null){
+            result.setMessage(message);
+        }
+        return result;
+    }
+
+    public static Result invalidParameterIsBlank(){
+        return invalidParameter(null);
+    }
+
+    public static Result invalidParameterIsBlank(String message){
+        Result result = new Result(false, ErrorCode.INVALID_PARAMETER_IS_BLANK);
+        if(message != null){
+            result.setMessage(message);
+        }
+        return result;
+    }
+
     /**
      * 成功调用时的构造方法
      *

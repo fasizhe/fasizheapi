@@ -6,7 +6,7 @@ import com.faishze.api.fasizheapi.pojo.do0.User;
 import com.faishze.api.fasizheapi.result.ErrorCode;
 import com.faishze.api.fasizheapi.result.Result;
 import com.faishze.api.fasizheapi.service.UserService;
-import com.faishze.api.fasizheapi.shiro.token.Jwt;
+import com.faishze.api.fasizheapi.pojo.dto.Jwt;
 import com.faishze.api.fasizheapi.shiro.utils.JwtUtils;
 import com.faishze.api.fasizheapi.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;

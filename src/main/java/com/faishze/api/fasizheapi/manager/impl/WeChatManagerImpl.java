@@ -5,6 +5,8 @@ import com.faishze.api.fasizheapi.result.Result;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.InputStream;
+
 /**
  * 描述:
  *
@@ -26,5 +28,8 @@ public class WeChatManagerImpl implements WeChatManager {
         return null;
     }
 
+    public InputStream getAvatar(String accessToken){
+        return null;
+    }
 
 }
