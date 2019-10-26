@@ -22,6 +22,11 @@ public class UserAO implements Serializable {
     public UserAO() {
     }
 
+    public UserAO(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public UserAO(Integer id, String username, String password) {
         this.id = id;
         this.username = username;

@@ -41,7 +41,7 @@ public class Result<T> implements Serializable {
         this.data = data;
     }
 
-    private Result(Boolean success, ErrorCode errorCode) {
+    public Result(Boolean success, ErrorCode errorCode) {
         this(success);
         this.errorCode = errorCode;
     }
@@ -59,6 +59,31 @@ public class Result<T> implements Serializable {
      */
     public static Result success() {
         return new Result<>(true, "OK");
+    }
+
+    public static Result invalidParameter(){
+        return invalidParameter(null);
+    }
+
+
+    public static Result invalidParameter(String message){
+        Result result = new Result(false, ErrorCode.INVALID_PARAMETER);
+        if(message != null){
+            result.setMessage(message);
+        }
+        return result;
+    }
+
+    public static Result invalidParameterIsBlank(){
+        return invalidParameter(null);
+    }
+
+    public static Result invalidParameterIsBlank(String message){
+        Result result = new Result(false, ErrorCode.INVALID_PARAMETER_IS_BLANK);
+        if(message != null){
+            result.setMessage(message);
+        }
+        return result;
     }
 
     /**

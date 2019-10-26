@@ -1,11 +1,11 @@
 package com.faishze.api.fasizheapi.dao;
 
 import com.faishze.api.fasizheapi.pojo.do0.ReportTag;
-import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Mapper
+@Repository
 public interface ReportTagMapper {
     int deleteByPrimaryKey(Long id);
 

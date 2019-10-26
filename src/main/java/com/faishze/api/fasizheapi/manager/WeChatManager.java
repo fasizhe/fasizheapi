@@ -1,5 +1,7 @@
 package com.faishze.api.fasizheapi.manager;
 
+import com.faishze.api.fasizheapi.result.Result;
+
 /**
  * 描述:
  *
@@ -8,4 +10,5 @@ package com.faishze.api.fasizheapi.manager;
  * @create 2019-10-09 15:07
  */
 public interface WeChatManager {
+    Result login(String code);
 }
