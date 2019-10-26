@@ -52,8 +52,8 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-data-mongodb</artifactId>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-data-mongodb</artifactId>-->
         <!--</dependency>-->
 
         <dependency>
@@ -67,7 +67,7 @@
             <version>1.3.1</version>
         </dependency>
 
-<!--        分页插件-->
+        <!--        分页插件-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
@@ -134,9 +134,7 @@
         </dependency>
 
 
-
         <!--        java8以上缺少的jar包-->
-
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
@@ -158,6 +156,7 @@
             <artifactId>activation</artifactId>
             <version>1.1.1</version>
         </dependency>
+        <!--        java8以上缺少的jar包-->
 
         <!-- https://mvnrepository.com/artifact/com.github.dozermapper/dozer-core -->
         <dependency>
@@ -167,11 +166,6 @@
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.github.dozermapper/dozer-core -->
 
-        <groupId>javax.activation</groupId>
-        <artifactId>activation</artifactId>
-        <version>1.1.1</version>
-        </dependency>
-        <!--        java8以上缺少的jar包-->
 
 
     </dependencies>
