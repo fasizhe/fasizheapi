@@ -3,9 +3,9 @@ package com.faishze.api.fasizheapi.dao;
 import com.faishze.api.fasizheapi.dao.query.ArticleQuery;
 import com.faishze.api.fasizheapi.pojo.do0.Article;
 import com.github.pagehelper.Page;
-import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
-@Mapper
+@Repository
 public interface ArticleMapper {
     int deleteArticle(Integer id);
 

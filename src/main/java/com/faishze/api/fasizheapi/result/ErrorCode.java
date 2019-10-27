@@ -111,8 +111,14 @@ public enum ErrorCode {
      * 由于某些未知错误、异常或失败，请求处理失败。
      */
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,
-            "InternalError", "The request processing has failed due to some unknown exception, exception or failure.");
+            "InternalError", "The request processing has failed due to some unknown exception, exception or failure."),
 
+    /**
+     * 第三方系统的用户，需要在我们的系统内绑定账号
+     * @author masonluo
+     */
+    NEED_BIND(HttpStatus.TEMPORARY_REDIRECT,
+            "NEED_BIND", "The third party user must be bind an account in our system");
 
     private final HttpStatus httpStatus;
     private final String error;

@@ -1,41 +1,23 @@
 package com.faishze.api.fasizheapi.controller.v1;
 
-import com.faishze.api.fasizheapi.dao.UserMapper;
-import com.faishze.api.fasizheapi.pojo.do0.User;
-import com.faishze.api.fasizheapi.service.FileService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.faishze.api.fasizheapi.result.Result;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 描述:
- *
- * @author xhsf
- * @email 827032783@qq.com
- * @create 2019-10-26
+ * @author masonluo
+ * @date 2019/10/23 11:22 PM
  */
 @RestController
-@RequestMapping("/users")
-@Validated
 public class UserController {
 
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private FileService fileService;
-
-    @RequestMapping("/test")
-    public Object save(User user) {
-        userMapper.insert(user);
-        return user;
+    @PostMapping("/register")
+    public Result register(@RequestParam("phoneNum") String phoneNum,
+                           @RequestParam("validateCode") String validateCode){
+        /**
+         * TODO 用户注册逻辑
+         */
+        return null;
     }
-
-    @RequestMapping("/test2")
-    public Object saveFile(MultipartFile file) {
-        return fileService.save(file, "/user/avatar");
-    }
-
 }

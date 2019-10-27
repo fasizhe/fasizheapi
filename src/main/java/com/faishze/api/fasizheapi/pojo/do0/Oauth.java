@@ -1,5 +1,7 @@
 package com.faishze.api.fasizheapi.pojo.do0;
 
+import com.faishze.api.fasizheapi.enums.OauthType;
+
 import java.util.Date;
 
 public class Oauth {
@@ -7,7 +9,7 @@ public class Oauth {
 
     private Integer userId;
 
-    private String oauthType;
+    private OauthType oauthType;
 
     private String oauthId;
 
@@ -31,12 +33,12 @@ public class Oauth {
         this.userId = userId;
     }
 
-    public String getOauthType() {
+    public OauthType getOauthType() {
         return oauthType;
     }
 
-    public void setOauthType(String oauthType) {
-        this.oauthType = oauthType == null ? null : oauthType.trim();
+    public void setOauthType(OauthType oauthType) {
+        this.oauthType = oauthType;
     }
 
     public String getOauthId() {

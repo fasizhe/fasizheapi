@@ -3,7 +3,7 @@ package com.faishze.api.fasizheapi.service.impl;
 import com.faishze.api.fasizheapi.exception.ProcessingException;
 import com.faishze.api.fasizheapi.result.ErrorCode;
 import com.faishze.api.fasizheapi.service.FileService;
-import com.faishze.api.fasizheapi.service.constant.FileConsts;
+import com.faishze.api.fasizheapi.service.constant.FileConstant;
 import com.faishze.api.fasizheapi.util.file.FileNameUtils;
 import com.faishze.api.fasizheapi.util.file.FileUrl;
 import com.faishze.api.fasizheapi.util.ftp.FTPClientTemplate;
@@ -78,7 +78,7 @@ public class FileServiceImpl implements FileService {
     public String saveAndGetUrl(MultipartFile file, String directoryPath) {
         String fileName = save(file, directoryPath);
         //文件url
-        return FileConsts.HOST + directoryPath + fileName;
+        return FileConstant.HOST + directoryPath + fileName;
     }
 
     /**
@@ -151,7 +151,7 @@ public class FileServiceImpl implements FileService {
      */
     private File bufferFileOnLocal(MultipartFile file, String fileName) {
         //将文件缓存到本地文件夹
-        File bufFile = new File(FileConsts.BUF_PATH, fileName);
+        File bufFile = new File(FileConstant.BUF_PATH, fileName);
         try {
             //保存文件
             file.transferTo(bufFile);
