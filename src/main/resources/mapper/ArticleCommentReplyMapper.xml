@@ -12,11 +12,11 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteArticleCommentReply" parameterType="java.lang.Long">
     delete from t_article_comment_reply
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReply">
+  <insert id="saveArticleCommentReply" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReply">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -27,7 +27,7 @@
       #{replyUserId,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{likeNum,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReply">
+  <update id="updateArticleCommentReply" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReply">
     update t_article_comment_reply
     set user_id = #{userId,jdbcType=INTEGER},
       article_id = #{articleId,jdbcType=INTEGER},
@@ -39,15 +39,38 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="getArticleCommentReply" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select id, user_id, article_id, comment_id, reply_user_id, content, like_num, create_time, 
     update_time
     from t_article_comment_reply
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+  <select id="listArticleCommentReplys" resultMap="BaseResultMap">
     select id, user_id, article_id, comment_id, reply_user_id, content, like_num, create_time, 
     update_time
     from t_article_comment_reply
+  </select>
+  <select id="listArticleCommentReplysByQuery"
+          resultType="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReply">
+    select id, user_id, article_id, comment_id, reply_user_id, content, like_num, create_time,
+    update_time
+    from t_article_comment_reply
+    <where>
+      <if test="userId != null">
+        AND user_id = #{userId}
+      </if>
+      <if test="articleId != null">
+        article_id = #{articleId}
+      </if>
+      <if test="commentId != null">
+        comment_id = #{commentId}
+      </if>
+      <if test="replyUserId != null">
+        reply_user_id = #{replyUserId}
+      </if>
+    </where>
+    <if test="orderField != null">
+      order by ${orderField} ${orderType}
+    </if>
   </select>
 </mapper>

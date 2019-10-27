@@ -32,6 +32,3 @@ build/
 
 ### config ###
 *application.properties
-mvnw.cmd
-
-**/.DS_Store

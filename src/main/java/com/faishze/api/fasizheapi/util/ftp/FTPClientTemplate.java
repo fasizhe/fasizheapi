@@ -1,6 +1,6 @@
 package com.faishze.api.fasizheapi.util.ftp;
-
 import org.apache.commons.net.ftp.FTPClient;
+
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;

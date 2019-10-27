@@ -11,11 +11,11 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteArticleComment" parameterType="java.lang.Long">
     delete from t_article_comment
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleComment">
+  <insert id="saveArticleComment" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleComment">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -26,7 +26,7 @@
       #{replyNum,jdbcType=INTEGER}, #{likeNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleComment">
+  <update id="updateArticleComment" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleComment">
     update t_article_comment
     set user_id = #{userId,jdbcType=INTEGER},
       article_id = #{articleId,jdbcType=INTEGER},
@@ -37,13 +37,28 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="getArticleComment" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select id, user_id, article_id, content, reply_num, like_num, create_time, update_time
     from t_article_comment
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+  <select id="listArticleComments" resultMap="BaseResultMap">
     select id, user_id, article_id, content, reply_num, like_num, create_time, update_time
     from t_article_comment
+  </select>
+  <select id="listArticleCommentsByQuery" resultType="com.faishze.api.fasizheapi.pojo.do0.ArticleComment">
+    select id, user_id, article_id, content, reply_num, like_num, create_time, update_time
+    from t_article_comment
+    <where>
+      <if test="articleId != null">
+        article_id = #{articleId}
+      </if>
+      <if test="userId != null">
+        AND user_id = #{userId}
+      </if>
+    </where>
+    <if test="orderField != null">
+      order by ${orderField} ${orderType}
+    </if>
   </select>
 </mapper>

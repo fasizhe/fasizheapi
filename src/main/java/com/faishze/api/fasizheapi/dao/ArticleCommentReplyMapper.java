@@ -1,19 +1,21 @@
 package com.faishze.api.fasizheapi.dao;
 
+import com.faishze.api.fasizheapi.dao.query.ArticleCommentReplyQuery;
 import com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReply;
-import org.springframework.stereotype.Repository;
+import com.github.pagehelper.Page;
+import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
-
-@Repository
+@Mapper
 public interface ArticleCommentReplyMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteArticleCommentReply(Long id);
 
-    int insert(ArticleCommentReply record);
+    int saveArticleCommentReply(ArticleCommentReply record);
 
-    ArticleCommentReply selectByPrimaryKey(Long id);
+    ArticleCommentReply getArticleCommentReply(Long id);
 
-    List<ArticleCommentReply> selectAll();
+    Page<ArticleCommentReply> listArticleCommentReplys();
 
-    int updateByPrimaryKey(ArticleCommentReply record);
+    int updateArticleCommentReply(ArticleCommentReply record);
+
+    Page<ArticleCommentReply> listArticleCommentReplysByQuery(ArticleCommentReplyQuery articleCommentReplyQuery);
 }

@@ -1,12 +1,12 @@
 package com.faishze.api.fasizheapi.dao;
 
 import com.faishze.api.fasizheapi.pojo.do0.Report;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Repository
-public interface ReportMapper {
+@Mapper
+public interface  ReportMapper {
     int deleteByPrimaryKey(Long id);
 
     int insert(Report record);

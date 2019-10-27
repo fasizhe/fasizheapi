@@ -1,19 +1,21 @@
 package com.faishze.api.fasizheapi.dao;
 
+import com.faishze.api.fasizheapi.dao.query.ArticleCommentQuery;
 import com.faishze.api.fasizheapi.pojo.do0.ArticleComment;
-import org.springframework.stereotype.Repository;
+import com.github.pagehelper.Page;
+import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
-
-@Repository
+@Mapper
 public interface ArticleCommentMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteArticleComment(Long id);
 
-    int insert(ArticleComment record);
+    int saveArticleComment(ArticleComment record);
 
-    ArticleComment selectByPrimaryKey(Long id);
+    ArticleComment getArticleComment(Long id);
 
-    List<ArticleComment> selectAll();
+    Page<ArticleComment> listArticleComments();
 
-    int updateByPrimaryKey(ArticleComment record);
+    int updateArticleComment(ArticleComment record);
+
+    Page<ArticleComment> listArticleCommentsByQuery(ArticleCommentQuery articleCommentQuery);
 }
