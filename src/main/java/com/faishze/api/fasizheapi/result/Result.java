@@ -86,6 +86,14 @@ public class Result<T> implements Serializable {
         return result;
     }
 
+    public static Result unAuthorization(){
+        return unAuthorization(null);
+    }
+
+    public static Result unAuthorization(String message){
+        return new Result(false, ErrorCode.UNAUTHORIZED, message);
+    }
+
     /**
      * 成功调用时的构造方法
      *

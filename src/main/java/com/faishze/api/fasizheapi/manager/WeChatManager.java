@@ -1,8 +1,7 @@
 package com.faishze.api.fasizheapi.manager;
 
+import com.faishze.api.fasizheapi.manager.impl.WeChatManagerImpl;
 import com.faishze.api.fasizheapi.result.Result;
-
-import java.util.Map;
 
 /**
  * 描述:
@@ -14,7 +13,7 @@ import java.util.Map;
 public interface WeChatManager {
     Result login(String code);
 
-    Map<String, Object> getAccessToken(String code);
+    WeChatManagerImpl.Code2SessionResult code2SessionApi(String code);
 
     String getAvatar(String accessToken, String openID);
 }
