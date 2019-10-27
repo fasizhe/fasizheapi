@@ -25,4 +25,6 @@ public interface UserService {
     User get(User user);
 
     Result<Jwt> login(UserAO user);
+
+    User getByUserID(Integer userId);
 }

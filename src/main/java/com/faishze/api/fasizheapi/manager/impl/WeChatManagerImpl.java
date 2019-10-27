@@ -1,15 +1,24 @@
 package com.faishze.api.fasizheapi.manager.impl;
 
+import com.faishze.api.fasizheapi.enums.OauthType;
 import com.faishze.api.fasizheapi.manager.WeChatManager;
+import com.faishze.api.fasizheapi.pojo.do0.Oauth;
+import com.faishze.api.fasizheapi.pojo.do0.User;
+import com.faishze.api.fasizheapi.pojo.dto.Jwt;
 import com.faishze.api.fasizheapi.result.Result;
+import com.faishze.api.fasizheapi.service.OauthService;
+import com.faishze.api.fasizheapi.service.UserService;
+import com.faishze.api.fasizheapi.shiro.utils.JwtUtils;
 import com.faishze.api.fasizheapi.util.ftp.FTPClientTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +39,13 @@ public class WeChatManagerImpl implements WeChatManager {
     private RestTemplate restTemplate;
 
     @Autowired
-    FTPClientTemplate ftpClientTemplate;
+    private FTPClientTemplate ftpClientTemplate;
+
+    @Autowired
+    private OauthService oauthService;
+
+    @Autowired
+    private UserService userService;
 
     @Value("${mini.program.appID}")
     private String appID;
@@ -46,13 +61,35 @@ public class WeChatManagerImpl implements WeChatManager {
     @Value("mini.program.api.userInfo")
     private String userInfoApi;
 
+    // TODO 返回一个跳转去绑定的url
     @Override
     public Result login(String code) {
         Code2SessionResult apiResult = code2SessionApi(code);
-        if(!apiResult.getErrcode().equals(0)){
+        // 如果失败或者获取不到openid，返回授权失败
+        if(!apiResult.getErrcode().equals(0) || StringUtils.isEmpty(apiResult.getOpenid())){
             return Result.unAuthorization();
         }
-        return null;
+        String openID = apiResult.getOpenid();
+        Oauth oauthUser = oauthService.getByOauthID(openID);
+        if(oauthUser == null){
+            Oauth oauth = new Oauth();
+            oauth.setCreateTime(new Date());
+            oauth.setUpdateTime(new Date());
+            oauth.setOauthType(OauthType.WECHAT);
+            oauth.setOauthId(openID);
+            oauth = oauthService.add(oauth);
+            // 查看是否插入成功
+            if(oauth.getId() != null){
+                return Result.needBind();
+            }
+        }
+        // 证明绑定不成功，需要再次绑定
+        if(oauthUser.getId() == null){
+            return Result.needBind();
+        }
+        User user = userService.getByUserID(oauthUser.getUserId());
+        // 在此处user肯定不为空
+        return new Result<>(true, JwtUtils.sign(user.getUsername()));
     }
 
     /**

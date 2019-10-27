@@ -32,11 +32,11 @@ public class Result<T> implements Serializable {
      */
     private String message;
 
-    private Result(Boolean success) {
+    public Result(Boolean success) {
         this.success = success;
     }
 
-    private Result(Boolean success, T data) {
+    public Result(Boolean success, T data) {
         this(success);
         this.data = data;
     }
@@ -92,6 +92,16 @@ public class Result<T> implements Serializable {
 
     public static Result unAuthorization(String message){
         return new Result(false, ErrorCode.UNAUTHORIZED, message);
+    }
+
+    public static Result needBind(){
+        return new Result(false, ErrorCode.NEED_BIND);
+    }
+
+    public static Result needBind(String msg){
+        Result result = needBind();
+        result.setMessage(msg);
+        return result;
     }
 
     /**
