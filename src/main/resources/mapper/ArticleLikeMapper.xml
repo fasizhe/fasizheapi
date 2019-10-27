@@ -7,11 +7,11 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteArticleLike" parameterType="java.lang.Long">
     delete from t_article_like
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleLike">
+  <insert id="saveArticleLike" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleLike">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -20,19 +20,19 @@
     values (#{articleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleLike">
+  <update id="updateArticleLike" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleLike">
     update t_article_like
     set article_id = #{articleId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="getArticleLike" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select id, article_id, user_id, create_time
     from t_article_like
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+  <select id="listArticleLikes" resultMap="BaseResultMap">
     select id, article_id, user_id, create_time
     from t_article_like
   </select>

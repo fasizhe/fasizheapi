@@ -55,9 +55,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="listArticles" resultMap="BaseResultMap">
-    select id, user_id, title, `type`, like_num, collection_num, view_num, comment_num, 
-    available, create_time, update_time, content
-    from t_article
+
   </select>
   <select id="listArticlesByQuery" parameterType="com.faishze.api.fasizheapi.dao.query.ArticleQuery" resultMap="BaseResultMap">
     select id, user_id, title, `type`, like_num, collection_num, view_num, comment_num,
@@ -75,10 +73,7 @@
         </if>
     </where>
     <if test="orderField != null">
-        order by #{orderField}
-    </if>
-    <if test="orderType != null">
-        #{orderType}
+        order by ${orderField} ${orderType}
     </if>
   </select>
 </mapper>

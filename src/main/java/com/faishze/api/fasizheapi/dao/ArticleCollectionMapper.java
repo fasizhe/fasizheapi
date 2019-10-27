@@ -1,18 +1,22 @@
 package com.faishze.api.fasizheapi.dao;
 
+import com.faishze.api.fasizheapi.pojo.do0.entity.AritcleCollectionEntity;
 import com.faishze.api.fasizheapi.pojo.do0.ArticleCollection;
-import org.apache.ibatis.annotations.Mapper;
+import com.github.pagehelper.Page;
 
 import java.util.List;
 
 public interface ArticleCollectionMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteArticleCollection(Long id);
 
-    int insert(ArticleCollection record);
+    int saveArticleCollection(ArticleCollection record);
 
-    ArticleCollection selectByPrimaryKey(Long id);
+    ArticleCollection getArticleCollection(Long id);
 
-    List<ArticleCollection> selectAll();
+    List<ArticleCollection> listArticleCollections();
 
-    int updateByPrimaryKey(ArticleCollection record);
+    int updatetArticleCollection(ArticleCollection record);
+
+    //返回收藏者收藏的文章，id降序即收藏时间降序，由新到旧
+    Page<AritcleCollectionEntity> listArticleCollectionEntitysByCollectorId(Integer userId);
 }

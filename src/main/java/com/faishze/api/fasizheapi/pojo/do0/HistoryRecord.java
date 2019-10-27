@@ -1,5 +1,7 @@
 package com.faishze.api.fasizheapi.pojo.do0;
 
+import com.faishze.api.fasizheapi.constant.HistoryRecordType;
+
 import java.util.Date;
 
 public class HistoryRecord {
@@ -7,7 +9,7 @@ public class HistoryRecord {
 
     private Integer userId;
 
-    private String type;
+    private HistoryRecordType type;
 
     private Long typeId;
 
@@ -31,12 +33,12 @@ public class HistoryRecord {
         this.userId = userId;
     }
 
-    public String getType() {
+    public HistoryRecordType getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
+    public void setType(HistoryRecordType type) {
+        this.type = type;
     }
 
     public Long getTypeId() {

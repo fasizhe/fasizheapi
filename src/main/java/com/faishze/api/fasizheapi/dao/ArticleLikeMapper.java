@@ -7,13 +7,14 @@ import java.util.List;
 
 @Mapper
 public interface ArticleLikeMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteArticleLike(Long id);
 
-    int insert(ArticleLike record);
+    int saveArticleLike(ArticleLike record);
 
-    ArticleLike selectByPrimaryKey(Long id);
+    ArticleLike getArticleLike(Long id);
 
-    List<ArticleLike> selectAll();
+    List<ArticleLike> listArticleLikes();
 
-    int updateByPrimaryKey(ArticleLike record);
+    int updateArticleLike(ArticleLike record);
+
 }

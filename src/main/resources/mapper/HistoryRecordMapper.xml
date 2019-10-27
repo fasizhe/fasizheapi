@@ -4,40 +4,69 @@
   <resultMap id="BaseResultMap" type="com.faishze.api.fasizheapi.pojo.do0.HistoryRecord">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="type" jdbcType="INTEGER" property="type" />
     <result column="type_id" jdbcType="BIGINT" property="typeId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+
+  <resultMap id="HistoryRecordAboutArticleMap"
+             type="com.faishze.api.fasizheapi.pojo.do0.entity.HistoryRecordAboutArticleEntity">
+    <result column="firstTime" jdbcType="TIMESTAMP" property="firstTime" />
+    <result column="lastTime" jdbcType="TIMESTAMP" property="lastTime" />
+    <association property="article" javaType="com.faishze.api.fasizheapi.pojo.do0.Article">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="user_id" jdbcType="INTEGER" property="userId" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="type" jdbcType="INTEGER" property="type"/>
+      <result column="like_num" jdbcType="INTEGER" property="likeNum" />
+      <result column="collection_num" jdbcType="INTEGER" property="collectionNum" />
+      <result column="view_num" jdbcType="BIGINT" property="viewNum" />
+      <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+      <result column="available" jdbcType="BIT" property="available" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    </association>
+  </resultMap>
+  <delete id="deleteHistoryRecord" parameterType="java.lang.Long">
     delete from t_history_record
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.faishze.api.fasizheapi.pojo.do0.HistoryRecord">
+  <insert id="saveHistoryRecord" parameterType="com.faishze.api.fasizheapi.pojo.do0.HistoryRecord">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_history_record (user_id, `type`, type_id, 
       create_time, update_time)
-    values (#{userId,jdbcType=INTEGER}, #{type,jdbcType=CHAR}, #{typeId,jdbcType=BIGINT}, 
+    values (#{userId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{typeId,jdbcType=BIGINT},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.faishze.api.fasizheapi.pojo.do0.HistoryRecord">
+  <update id="updateHistoryRecord" parameterType="com.faishze.api.fasizheapi.pojo.do0.HistoryRecord">
     update t_history_record
     set user_id = #{userId,jdbcType=INTEGER},
-      `type` = #{type,jdbcType=CHAR},
+      `type` = #{type,jdbcType=INTEGER},
       type_id = #{typeId,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="getHistoryRecord" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select id, user_id, `type`, type_id, create_time, update_time
     from t_history_record
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+  <select id="listHistoryRecords" resultMap="BaseResultMap">
     select id, user_id, `type`, type_id, create_time, update_time
     from t_history_record
+  </select>
+  <select id="listHistoryRecordAboutArticleEntitysByUserId"
+          resultMap="HistoryRecordAboutArticleMap">
+    select thr.create_time as firstTime, thr.update_time as lastTime, ta.id, ta.user_id, title, ta.`type`,
+      like_num,collection_num, view_num, comment_num,
+      available, ta.create_time, ta.update_time, content
+    from t_history_record as thr , t_article as ta
+    where thr.user_id = #{userId} AND thr.type = 0 AND thr.type_id = ta.id
+    order by thr.update_time desc
   </select>
 </mapper>

@@ -1,19 +1,22 @@
 package com.faishze.api.fasizheapi.dao;
 
 import com.faishze.api.fasizheapi.pojo.do0.HistoryRecord;
+import com.faishze.api.fasizheapi.pojo.do0.entity.HistoryRecordAboutArticleEntity;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 @Mapper
 public interface HistoryRecordMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteHistoryRecord(Long id);
 
-    int insert(HistoryRecord record);
+    int saveHistoryRecord(HistoryRecord record);
 
-    HistoryRecord selectByPrimaryKey(Long id);
+    HistoryRecord getHistoryRecord(Long id);
 
-    List<HistoryRecord> selectAll();
+    Page<HistoryRecord> listHistoryRecords();
 
-    int updateByPrimaryKey(HistoryRecord record);
+    int updateHistoryRecord(HistoryRecord record);
+
+    //updateTime降序
+    Page<HistoryRecordAboutArticleEntity> listHistoryRecordAboutArticleEntitysByUserId(Integer userId);
 }

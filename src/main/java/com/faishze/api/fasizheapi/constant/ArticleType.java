@@ -21,6 +21,15 @@ public enum ArticleType{
         return null;
     }
 
+    public static ArticleType getArticleTypeByName(String name) {
+        for (ArticleType articleType : ArticleType.values()) {
+            if (articleType.getName() == name) {
+                return articleType;
+            }
+        }
+        return null;
+    }
+
     public int getId() {
         return id;
     }
