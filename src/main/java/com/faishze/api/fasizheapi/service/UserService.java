@@ -27,4 +27,6 @@ public interface UserService {
     Result<Jwt> login(UserAO user);
 
     User getByUserID(Integer userId);
+
+    String geUsernameByUserID(Integer userId);
 }

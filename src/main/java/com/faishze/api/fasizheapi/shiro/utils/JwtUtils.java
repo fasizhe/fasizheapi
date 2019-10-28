@@ -1,6 +1,7 @@
 package com.faishze.api.fasizheapi.shiro.utils;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
@@ -12,7 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.xml.crypto.Data;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author masonluo
@@ -22,14 +26,13 @@ import java.util.Date;
 public class JwtUtils{
 
     private static final Logger log = LoggerFactory.getLogger(JwtUtils.class);
-
     // 定义过期时间(ms)
     private static final long EXPIRE_TIME = 5 * 60 * 100;
     // 定义失效允许时间(s)
     private static final long LEE_WAY = 2 * 60 * 60;
-    // 系统密钥
+    // TODO 更改系统密钥
     @Value("${shiro.private.srcret}")
-    private static String secret;
+    private static String secret = "test";
 
     /**
      * 验证一个jwt是否有效
@@ -79,27 +82,41 @@ public class JwtUtils{
     }
 
     /**
-     * 进行jwt的签发
-     * @param username 用户名
-     * @return 返回一个jwt字符串
+     * 根据声明来创建一个jwt
+     * @param claims 声明, 必须含有username
+     * @return jwt
      */
-    public static Jwt sign(String username){
+    public static Jwt sign(Map<String, String> claims){
+        if(claims.get("username") == null){
+            return null;
+        }
         try{
             Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            // 附带username信息
             Jwt jwt = new Jwt();
             jwt.setExpireTime(date);
-            jwt.setUsername(username);
-            jwt.setToken(JWT.create()
-                    .withClaim("username", username)
-                    .withExpiresAt(date)
-                    .sign(algorithm));
+            jwt.setUsername(claims.get("username"));
+            JWTCreator.Builder builder = JWT.create();
+            for(Map.Entry<String, String> entry : claims.entrySet()){
+                builder = builder.withClaim(entry.getKey(), entry.getValue());
+            }
+            jwt.setToken(builder.withExpiresAt(date).sign(algorithm));
             return jwt;
         }catch (Exception e){
             log.error("sing jwt error", e.getMessage());
             return null;
         }
+    }
+
+    /**
+     * 进行jwt的签发
+     * @param username 用户名
+     * @return 返回一个jwt字符串
+     */
+    public static Jwt sign(String username){
+        Map<String, String> claims = new HashMap<>();
+        claims.put("username", username);
+        return sign(claims);
     }
 
     /**
@@ -115,5 +132,10 @@ public class JwtUtils{
             return sign(username);
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        Jwt token = JwtUtils.sign("masonluo");
+        System.out.println(JwtUtils.verify(token.getToken(), "masonluo"));
     }
 }

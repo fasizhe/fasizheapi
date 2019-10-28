@@ -35,3 +35,7 @@ build/
 mvnw.cmd
 
 **/.DS_Store
+
+## showdoc ##
+showdoc_api.sh
+api_demo.test

@@ -12,8 +12,4 @@ import com.faishze.api.fasizheapi.result.Result;
  */
 public interface WeChatManager {
     Result login(String code);
-
-    WeChatManagerImpl.Code2SessionResult code2SessionApi(String code);
-
-    String getAvatar(String accessToken, String openID);
 }

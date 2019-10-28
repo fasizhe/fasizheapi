@@ -1,5 +1,6 @@
 package com.faishze.api.fasizheapi.service;
 
+import com.faishze.api.fasizheapi.enums.OauthType;
 import com.faishze.api.fasizheapi.pojo.do0.Oauth;
 
 /**
@@ -9,5 +10,5 @@ import com.faishze.api.fasizheapi.pojo.do0.Oauth;
 public interface OauthService {
     Oauth add(Oauth oauth);
 
-    Oauth getByOauthID(String openID);
+    Oauth getByOauthIDAndOauthType(String openID, OauthType oauthType);
 }

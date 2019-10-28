@@ -8,7 +8,7 @@ import com.faishze.api.fasizheapi.result.Result;
 import com.faishze.api.fasizheapi.service.UserService;
 import com.faishze.api.fasizheapi.pojo.dto.Jwt;
 import com.faishze.api.fasizheapi.shiro.utils.JwtUtils;
-import com.faishze.api.fasizheapi.util.PasswordUtils;
+import com.faishze.api.fasizheapi.util.EncryptUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,9 +38,21 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    // TODO
+    @Override
+    public User getByUserID(Integer userId) {
+        return null;
+    }
+
+    // TODO
+    @Override
+    public String geUsernameByUserID(Integer userId) {
+        return null;
+    }
+
     @Override
     public Result<Jwt> login(UserAO user) {
-        user.setPassword(PasswordUtils.encryptPassword(user.getPassword()));
+        user.setPassword(EncryptUtils.encrypt(user.getPassword()));
         User userDo = userMapper.getByUsernameAndPassword(user.getUsername(), user.getPassword());
         if(userDo != null){
             // 判断用户是否被锁定

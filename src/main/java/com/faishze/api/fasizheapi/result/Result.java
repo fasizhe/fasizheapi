@@ -41,6 +41,10 @@ public class Result<T> implements Serializable {
         this.data = data;
     }
 
+    public Result(ErrorCode code){
+        this(false, code);
+    }
+
     public Result(Boolean success, ErrorCode errorCode) {
         this(success);
         this.errorCode = errorCode;
@@ -98,8 +102,30 @@ public class Result<T> implements Serializable {
         return new Result(false, ErrorCode.NEED_BIND);
     }
 
+    public static Result needBind(Object data){
+        Result result = needBind();
+        result.setData(data);
+        return result;
+    }
+
     public static Result needBind(String msg){
         Result result = needBind();
+        result.setMessage(msg);
+        return result;
+    }
+
+    public static Result needBind(String msg, Object data){
+        Result result = needBind(data);
+        result.setMessage(msg);
+        return result;
+    }
+
+    public static Result internalError(){
+        return new Result(false, ErrorCode.INTERNAL_ERROR);
+    }
+
+    public static Result internalError(String msg){
+        Result result = internalError();
         result.setMessage(msg);
         return result;
     }

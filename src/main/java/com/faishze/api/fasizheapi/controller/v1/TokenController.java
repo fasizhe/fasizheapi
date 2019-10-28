@@ -29,9 +29,16 @@ public class TokenController {
     }
 
     /**
-     * 用户登录接口
-     * @param username 用户名
-     * @param password 密码
+     * showdoc
+     * 用户登录获取token接口
+     * @catalog token
+     * @title 获取jwt
+     * @description 用户登录，获取jwt令牌
+     * @url /token
+     * @method GET
+     *
+     * @param username 必选 string 用户名
+     * @param password 必选 string 密码
      * @return 一个携带jwt的Token或者错误码
      */
     @GetMapping("/token")
