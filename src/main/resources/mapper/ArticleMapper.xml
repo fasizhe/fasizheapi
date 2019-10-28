@@ -30,7 +30,7 @@
     values (#{userId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
       #{type,jdbcType=INTEGER},
       #{likeNum,jdbcType=INTEGER}, #{collectionNum,jdbcType=INTEGER}, #{viewNum,jdbcType=BIGINT}, 
-      #{commentNum,jdbcType=INTEGER}, #{available,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{commentNum,jdbcType=INTEGER}, #{available,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <update id="updateArticle" parameterType="com.faishze.api.fasizheapi.pojo.do0.Article">
