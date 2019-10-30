@@ -11,4 +11,6 @@ public interface OauthService {
     Oauth add(Oauth oauth);
 
     Oauth getByOauthIDAndOauthType(String openID, OauthType oauthType);
+
+    boolean bind(Integer id, String redisOauthID, OauthType oauthType);
 }

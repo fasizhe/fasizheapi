@@ -20,4 +20,9 @@ public class OauthServiceImpl implements OauthService {
     public Oauth getByOauthIDAndOauthType(String openID, OauthType oauthType) {
         return null;
     }
+
+    @Override
+    public boolean bind(Integer id, String redisOauthID, OauthType oauthType) {
+        return false;
+    }
 }

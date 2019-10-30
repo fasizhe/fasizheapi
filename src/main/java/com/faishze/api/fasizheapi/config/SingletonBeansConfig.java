@@ -73,6 +73,4 @@ public class SingletonBeansConfig {
     public Mapper mapper() {
         return DozerBeanMapperBuilder.buildDefault();
     }
-
-
 }

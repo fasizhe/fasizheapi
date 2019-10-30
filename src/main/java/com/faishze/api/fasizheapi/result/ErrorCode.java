@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     /**
-     * 参数为null
+     * 参数非法
      */
     INVALID_PARAMETER(HttpStatus.BAD_REQUEST,
             "InvalidParameter", "The {Parameter} is not valid."),
@@ -52,6 +52,7 @@ public enum ErrorCode {
      */
     UNKNOWN_ERROR(HttpStatus.BAD_REQUEST,
             "UnknownError", "The request processing has failed due to some unknown exception."),
+
 
     /**
      * 短时间内请求过多

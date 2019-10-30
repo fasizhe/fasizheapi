@@ -86,7 +86,7 @@ public class WeChatManagerImpl implements WeChatManager {
             oauth.setOauthType(OauthType.WECHAT);
             // 判断是否插入成功
             if(oauthService.add(oauth).getUserId() != null){
-                return Result.needBind(generateNeedBindingData(response.getOpenid()));
+                return Result.needBind(generateNeedBindingData(response.getOpenid(), OauthType.WECHAT));
             }else{
                 return Result.internalError("服务器错误");
             }
@@ -124,17 +124,19 @@ public class WeChatManagerImpl implements WeChatManager {
      * @param openID
      * @return
      */
-    private Map<String, String> generateNeedBindingData(String openID){
+    private Map<String, String> generateNeedBindingData(String openID, OauthType oauthType){
         String code = generateEncryptCode(openID);
         code = EncryptUtils.encrypt(code);
         // 存进redis，以便查验
-        redisTemplate.opsForValue().set(Redis.OAUTH_USER_BINDING_CODE_PREFIX  + openID, code);
+        // 使用Hash结构, 存放open_id和open_type
+        redisTemplate.opsForHash().put(Redis.OAUTH_USER_BINDING_CODE_PREFIX + code, "open_id", openID);
+        redisTemplate.opsForHash().put(Redis.OAUTH_USER_BINDING_CODE_PREFIX + code, "open_type_id", oauthType.getOauthId());
         Map<String, String> map = new HashMap<>();
-        map.put("target_url", "/user/{username}/oauth/{oauth_id}");
+        map.put("target_url", "/oauth/{oauth_id}/user/{username}");
         map.put("code", code);
+        map.put("oauth_type", oauthType.getOauthId().toString());
         return map;
     }
-
     /**
      * 加密openID,获取绑定时需要的凭证
      * @param openID 用户openID

@@ -179,6 +179,17 @@
             <version>3.8.3</version>
         </dependency>
 
+        <!-- JSR380 -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.17.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-el</artifactId>
+            <version>9.0.22</version>
+        </dependency>
     </dependencies>
 
     <build>

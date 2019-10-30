@@ -4,20 +4,25 @@ import com.faishze.api.fasizheapi.constant.ArticleType;
 import com.faishze.api.fasizheapi.dao.ArticleMapper;
 import com.faishze.api.fasizheapi.dao.query.ArticleQuery;
 import com.faishze.api.fasizheapi.pojo.do0.Article;
+import com.faishze.api.fasizheapi.service.FileService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
 import java.util.Date;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = FasizheApiApplication.class)
 public class FasizheApiApplicationTests {
 
     @Autowired
     ArticleMapper articleMapper;
+
+    @Autowired
+    FileService fileService;
 
     @Test
     public void contextLoads() {
@@ -43,6 +48,13 @@ public class FasizheApiApplicationTests {
         article.setUpdateTime(new Date());
         article.setType(ArticleType.UGC);
         articleMapper.saveArticle(article);
+    }
+
+    @Test
+    public void testUploadFile(){
+        File file = new File("/Users/belle/Desktop/lunbo/img2.png");
+        if(file.exists())
+            System.out.println(fileService.saveAndGetUrl(file, "avatar"));
     }
 
 }

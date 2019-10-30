@@ -13,6 +13,19 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
+
+  <sql id="BaseColumnList">
+    id, user_id, gender, avatar_url, nick_name, full_name, phone, email, create_time, update_time
+  </sql>
+
+  <sql id="BaseTable">
+    t_profile
+  </sql>
+
+  <sql id="BaseAlisaTable">
+    t_profile t
+  </sql>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_profile
     where id = #{id,jdbcType=INTEGER}
@@ -53,5 +66,13 @@
     select id, user_id, gender, avatar_url, nick_name, full_name, phone, email, create_time, 
     update_time
     from t_profile
+  </select>
+
+  <select id="selectByUserID" resultMap="BaseResultMap">
+      select
+      <include refid="BaseColumnList"/>
+      from
+      <include refid="BaseTable"/>
+      where user_id = #{userID}
   </select>
 </mapper>
