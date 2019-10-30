@@ -1,6 +1,6 @@
 package com.faishze.api.fasizheapi.service;
 
-import com.faishze.api.fasizheapi.dao.query.ArticleCommentQuery;
+import com.faishze.api.fasizheapi.query.ArticleCommentQuery;
 import com.faishze.api.fasizheapi.pojo.dto.ArticleCommentDTO;
 import com.github.pagehelper.Page;
 

@@ -1,6 +1,6 @@
 package com.faishze.api.fasizheapi.dao;
 
-import com.faishze.api.fasizheapi.dao.query.ArticleQuery;
+import com.faishze.api.fasizheapi.query.ArticleQuery;
 import com.faishze.api.fasizheapi.pojo.do0.Article;
 import com.github.pagehelper.Page;
 import org.springframework.stereotype.Repository;

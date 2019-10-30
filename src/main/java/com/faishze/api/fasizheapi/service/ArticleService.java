@@ -1,8 +1,8 @@
 package com.faishze.api.fasizheapi.service;
 
-import com.faishze.api.fasizheapi.dao.query.ArticleQuery;
+import com.faishze.api.fasizheapi.query.ArticleQuery;
 import com.faishze.api.fasizheapi.pojo.dto.ArticleDTO;
-import com.github.pagehelper.Page;
+import com.faishze.api.fasizheapi.result.Result;
 
 /**
  * @author 杜科
@@ -19,15 +19,15 @@ public interface ArticleService {
      * @author: 杜科
      * @date: 2019/10/27
      */
-    ArticleDTO saveArticleDTO(ArticleDTO articleDTO);
+    Result saveArticleDTO(ArticleDTO articleDTO);
 
     int deleteArticleDTO(Integer id);
 
-    ArticleDTO getArticleDTO(Integer id);
+    Result getArticleDTO(Integer id);
 
-    ArticleDTO updateArticleDTO(ArticleDTO articleDTO);
+    Result updateArticleDTO(ArticleDTO articleDTO);
 
-    Page<ArticleDTO> listArticleDTOs(Integer pageNum, Integer pageSize);
+    Result listArticleDTOs(Integer pageNum, Integer pageSize);
 
     /**
      * @description: 按查询条件分页返回相应文章
@@ -38,6 +38,6 @@ public interface ArticleService {
      * @author: 杜科
      * @date: 2019/10/27
      */
-    Page<ArticleDTO> listArticleDTOsByQuery(Integer pageNum, Integer pageSize, ArticleQuery articleQuery);
+    Result listArticleDTOsByQuery(Integer pageNum, Integer pageSize, ArticleQuery articleQuery);
 
 }

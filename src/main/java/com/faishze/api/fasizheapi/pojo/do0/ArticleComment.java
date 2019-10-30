@@ -7,6 +7,8 @@ public class ArticleComment {
 
     private Integer userId;
 
+    private String userNickName;
+
     private Integer articleId;
 
     private String content;
@@ -33,6 +35,14 @@ public class ArticleComment {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
     }
 
     public Integer getArticleId() {
@@ -88,6 +98,7 @@ public class ArticleComment {
         return "ArticleComment{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", userNickName='" + userNickName + '\'' +
                 ", articleId=" + articleId +
                 ", content='" + content + '\'' +
                 ", replyNum=" + replyNum +

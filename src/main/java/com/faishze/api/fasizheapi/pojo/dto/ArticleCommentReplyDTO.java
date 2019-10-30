@@ -1,6 +1,6 @@
 package com.faishze.api.fasizheapi.pojo.dto;
 
-import com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReply;
+import java.util.Date;
 
 /**
  * @author 杜科
@@ -10,44 +10,119 @@ import com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReply;
  */
 public class ArticleCommentReplyDTO {
 
-    //发起者名字
-    private String senderName;
+    private Long id;
 
-    //接受者名字
-    private String receiverName;
+    private Integer userId;
 
-    private ArticleCommentReply articleCommentReply;
+    private String userNickName;
 
-    public String getSenderName() {
-        return senderName;
+    private Integer articleId;
+
+    private Long commentId;
+
+    private Integer replyUserId;
+
+    private String replyUserNickName;
+
+    private String content;
+
+    private Integer likeNum;
+
+    private Date createTime;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getReceiverName() {
-        return receiverName;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setReceiverName(String receiverName) {
-        this.receiverName = receiverName;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public ArticleCommentReply getArticleCommentReply() {
-        return articleCommentReply;
+    public Integer getArticleId() {
+        return articleId;
     }
 
-    public void setArticleCommentReply(ArticleCommentReply articleCommentReply) {
-        this.articleCommentReply = articleCommentReply;
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
+    }
+
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
+    }
+
+    public Long getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
+    }
+
+    public Integer getReplyUserId() {
+        return replyUserId;
+    }
+
+    public void setReplyUserId(Integer replyUserId) {
+        this.replyUserId = replyUserId;
+    }
+
+    public String getReplyUserNickName() {
+        return replyUserNickName;
+    }
+
+    public void setReplyUserNickName(String replyUserNickName) {
+        this.replyUserNickName = replyUserNickName;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
+    }
+
+    public Integer getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Override
     public String toString() {
         return "ArticleCommentReplyDTO{" +
-                "senderName='" + senderName + '\'' +
-                ", receiverName='" + receiverName + '\'' +
-                ", articleCommentReply=" + articleCommentReply +
+                "id=" + id +
+                ", userId=" + userId +
+                ", userNickName='" + userNickName + '\'' +
+                ", articleId=" + articleId +
+                ", commentId=" + commentId +
+                ", replyUserId=" + replyUserId +
+                ", replyUserNickName='" + replyUserNickName + '\'' +
+                ", content='" + content + '\'' +
+                ", likeNum=" + likeNum +
+                ", createTime=" + createTime +
                 '}';
     }
 }

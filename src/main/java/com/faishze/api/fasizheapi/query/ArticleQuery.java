@@ -1,4 +1,4 @@
-package com.faishze.api.fasizheapi.dao.query;
+package com.faishze.api.fasizheapi.query;
 
 import com.faishze.api.fasizheapi.constant.ArticleType;
 
@@ -10,32 +10,22 @@ import com.faishze.api.fasizheapi.constant.ArticleType;
  */
 public class ArticleQuery {
 
-    //要排序的字段
-    public static final String ID="id";
-    public static final String LIKE_NUM="like_num";
-    public static final String COLLECTION_NUM="collection_num";
-    public static final String VIEW_NUM="view_num";
-    public static final String COMMENT_NUM="comment_num";
-    public static final String CREATE_TIME="create_time";
-    public static final String UPDATE_TIME="update_time";
-
-    //排序的方式
-    public static final String ASC="ASC";
-    public static final String DESC="DESC";
-
     //条件
     private Boolean available;
     private Integer userId;
+    private String userNickName;
     private ArticleType type;
     private String orderField;
-    private String orderType=ASC;
+    private String orderType="ASC";
 
     public ArticleQuery() {
     }
 
-    public ArticleQuery(Boolean available, Integer userId, ArticleType type, String orderField, String orderType) {
+    public ArticleQuery(Boolean available, Integer userId, String userNickName, ArticleType type, String orderField,
+                        String orderType) {
         this.available = available;
         this.userId = userId;
+        this.userNickName = userNickName;
         this.type = type;
         this.orderField = orderField;
         this.orderType = orderType;
@@ -55,6 +45,14 @@ public class ArticleQuery {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
     }
 
     public ArticleType getType() {

@@ -1,6 +1,6 @@
 package com.faishze.api.fasizheapi.controller.v1;
 
-import com.faishze.api.fasizheapi.dao.query.ArticleCommentQuery;
+import com.faishze.api.fasizheapi.query.ArticleCommentQuery;
 import com.faishze.api.fasizheapi.pojo.vo.ArticleCommentVO;
 import com.faishze.api.fasizheapi.service.ArticleCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +29,8 @@ public class ArticleCommentController {
                                                      @RequestParam("pageNum")Integer pageNum,
                                                      @RequestParam("pageSize")Integer pageSize){
         //分页返回文章所有评论
+        List<ArticleCommentVO> articleCommentVOList=new ArrayList<>();
+        ArticleCommentVO articleCommentVO=new ArticleCommentVO();
         return null;
     }
 

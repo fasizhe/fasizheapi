@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.faishze.api.fasizheapi.pojo.do0.Article">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_nick_name" jdbcType="VARCHAR" property="userNickName" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="type" jdbcType="INTEGER" property="type"/>
     <result column="like_num" jdbcType="INTEGER" property="likeNum" />
@@ -21,21 +22,20 @@
   </delete>
   <insert id="saveArticle" parameterType="com.faishze.api.fasizheapi.pojo.do0.Article">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
+      SELECT LAST_INSERT_ID() as id
     </selectKey>
-    insert into t_article (user_id, title, `type`, 
+    insert into t_article (user_id, user_nick_name, title, `type`,
       like_num, collection_num, view_num, 
-      comment_num, available, create_time, 
-      update_time, content)
-    values (#{userId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
+      comment_num, available, content)
+    values (#{userId,jdbcType=INTEGER}, #{userNickName,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
       #{type,jdbcType=INTEGER},
       #{likeNum,jdbcType=INTEGER}, #{collectionNum,jdbcType=INTEGER}, #{viewNum,jdbcType=BIGINT}, 
-      #{commentNum,jdbcType=INTEGER}, #{available,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP},
-      #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+      #{commentNum,jdbcType=INTEGER}, #{available,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <update id="updateArticle" parameterType="com.faishze.api.fasizheapi.pojo.do0.Article">
     update t_article
     set user_id = #{userId,jdbcType=INTEGER},
+      user_nick_name=#{userNickName,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       `type` = #{type,jdbcType=INTEGER},
       like_num = #{likeNum,jdbcType=INTEGER},
@@ -43,13 +43,11 @@
       view_num = #{viewNum,jdbcType=BIGINT},
       comment_num = #{commentNum,jdbcType=INTEGER},
       available = #{available,jdbcType=BIT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="getArticle" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, user_id, title, `type`, like_num, collection_num, view_num, comment_num, 
+    select id, user_id, user_nick_name, title, `type`, like_num, collection_num, view_num, comment_num,
     available, create_time, update_time, content
     from t_article
     where id = #{id,jdbcType=INTEGER}
@@ -57,8 +55,8 @@
   <select id="listArticles" resultMap="BaseResultMap">
 
   </select>
-  <select id="listArticlesByQuery" parameterType="com.faishze.api.fasizheapi.dao.query.ArticleQuery" resultMap="BaseResultMap">
-    select id, user_id, title, `type`, like_num, collection_num, view_num, comment_num,
+  <select id="listArticlesByQuery" parameterType="com.faishze.api.fasizheapi.query.ArticleQuery" resultMap="BaseResultMap">
+    select id, user_id, user_nick_name, title, `type`, like_num, collection_num, view_num, comment_num,
     available, create_time, update_time, content
     from t_article
     <where>
@@ -68,6 +66,9 @@
         <if test="userId != null">
             AND user_id = #{userId}
         </if>
+      <if test="userNickName != null">
+        AND user_nick_name = #{userNickName}
+      </if>
         <if test="type != null">
             AND type = #{type}
         </if>

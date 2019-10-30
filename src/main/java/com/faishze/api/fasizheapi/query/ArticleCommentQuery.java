@@ -1,4 +1,4 @@
-package com.faishze.api.fasizheapi.dao.query;
+package com.faishze.api.fasizheapi.query;
 
 /**
  * @author 杜科
@@ -21,15 +21,18 @@ public class ArticleCommentQuery {
     //条件
     private Integer articleId;
     private Integer userId;
+    private String userNickName;
 
     private String orderField;
     private String orderType=ASC;
 
     public ArticleCommentQuery(){}
 
-    public ArticleCommentQuery(Integer articleId, Integer userId, String orderField, String orderType) {
+    public ArticleCommentQuery(Integer articleId, Integer userId, String userNickName, String orderField,
+                               String orderType) {
         this.articleId = articleId;
         this.userId = userId;
+        this.userNickName = userNickName;
         this.orderField = orderField;
         this.orderType = orderType;
     }
@@ -40,6 +43,14 @@ public class ArticleCommentQuery {
 
     public void setArticleId(Integer articleId) {
         this.articleId = articleId;
+    }
+
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
     }
 
     public Integer getUserId() {

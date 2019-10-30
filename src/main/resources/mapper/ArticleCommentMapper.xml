@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.faishze.api.fasizheapi.pojo.do0.ArticleComment">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_nick_name" jdbcType="VARCHAR" property="userNickName" />
     <result column="article_id" jdbcType="INTEGER" property="articleId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="reply_num" jdbcType="INTEGER" property="replyNum" />
@@ -19,26 +20,24 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_article_comment (user_id, article_id, content, 
-      reply_num, like_num, create_time, 
-      update_time)
-    values (#{userId,jdbcType=INTEGER}, #{articleId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
-      #{replyNum,jdbcType=INTEGER}, #{likeNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+    insert into t_article_comment (user_id, user_nick_name, article_id, content,
+      reply_num, like_num)
+    values (#{userId,jdbcType=INTEGER}, #{userNickName,jdbcType=VARCHAR}, #{articleId,jdbcType=INTEGER},
+    #{content,jdbcType=VARCHAR},
+      #{replyNum,jdbcType=INTEGER}, #{likeNum,jdbcType=INTEGER})
   </insert>
   <update id="updateArticleComment" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleComment">
     update t_article_comment
     set user_id = #{userId,jdbcType=INTEGER},
+      user_nick_name=#{userNickName,jdbcType=VARCHAR},
       article_id = #{articleId,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
       reply_num = #{replyNum,jdbcType=INTEGER},
-      like_num = #{likeNum,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      like_num = #{likeNum,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="getArticleComment" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, user_id, article_id, content, reply_num, like_num, create_time, update_time
+    select id, user_id, user_nick_name, article_id, content, reply_num, like_num, create_time, update_time
     from t_article_comment
     where id = #{id,jdbcType=BIGINT}
   </select>
@@ -47,7 +46,7 @@
     from t_article_comment
   </select>
   <select id="listArticleCommentsByQuery" resultType="com.faishze.api.fasizheapi.pojo.do0.ArticleComment">
-    select id, user_id, article_id, content, reply_num, like_num, create_time, update_time
+    select id, user_id, article_id, user_nick_name, content, reply_num, like_num, create_time, update_time
     from t_article_comment
     <where>
       <if test="articleId != null">
@@ -55,6 +54,9 @@
       </if>
       <if test="userId != null">
         AND user_id = #{userId}
+      </if>
+      <if test="userNickName != null">
+        AND user_nick_name = #{userNickName}
       </if>
     </where>
     <if test="orderField != null">

@@ -9,6 +9,8 @@ public class Article {
 
     private Integer userId;
 
+    private String userNickName;
+
     private String title;
 
     private ArticleType type;
@@ -43,6 +45,14 @@ public class Article {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
     }
 
     public String getTitle() {
@@ -130,8 +140,9 @@ public class Article {
         return "Article{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", userNickName='" + userNickName + '\'' +
                 ", title='" + title + '\'' +
-                ", type='" + type + '\'' +
+                ", type=" + type +
                 ", likeNum=" + likeNum +
                 ", collectionNum=" + collectionNum +
                 ", viewNum=" + viewNum +

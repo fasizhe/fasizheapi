@@ -1,6 +1,6 @@
 package com.faishze.api.fasizheapi.dao;
 
-import com.faishze.api.fasizheapi.dao.query.ArticleCommentQuery;
+import com.faishze.api.fasizheapi.query.ArticleCommentQuery;
 import com.faishze.api.fasizheapi.pojo.do0.ArticleComment;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;

@@ -7,11 +7,15 @@ public class ArticleCommentReply{
 
     private Integer userId;
 
+    private String userNickName;
+
     private Integer articleId;
 
     private Long commentId;
 
-    private String replyUserId;
+    private Integer replyUserId;
+
+    private String replyUserNickName;
 
     private String content;
 
@@ -41,6 +45,14 @@ public class ArticleCommentReply{
         return articleId;
     }
 
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
+    }
+
     public void setArticleId(Integer articleId) {
         this.articleId = articleId;
     }
@@ -53,12 +65,20 @@ public class ArticleCommentReply{
         this.commentId = commentId;
     }
 
-    public String getReplyUserId() {
+    public Integer getReplyUserId() {
         return replyUserId;
     }
 
-    public void setReplyUserId(String replyUserId) {
-        this.replyUserId = replyUserId == null ? null : replyUserId.trim();
+    public void setReplyUserId(Integer replyUserId) {
+        this.replyUserId = replyUserId;
+    }
+
+    public String getReplyUserNickName() {
+        return replyUserNickName;
+    }
+
+    public void setReplyUserNickName(String replyUserNickName) {
+        this.replyUserNickName = replyUserNickName;
     }
 
     public String getContent() {
@@ -98,9 +118,11 @@ public class ArticleCommentReply{
         return "ArticleCommentReply{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", userNickName='" + userNickName + '\'' +
                 ", articleId=" + articleId +
                 ", commentId=" + commentId +
                 ", replyUserId='" + replyUserId + '\'' +
+                ", replyUserNickName='" + replyUserNickName + '\'' +
                 ", content='" + content + '\'' +
                 ", likeNum=" + likeNum +
                 ", createTime=" + createTime +

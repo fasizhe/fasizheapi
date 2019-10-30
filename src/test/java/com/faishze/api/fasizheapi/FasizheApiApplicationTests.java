@@ -4,10 +4,11 @@ import com.faishze.api.fasizheapi.constant.ArticleType;
 import com.faishze.api.fasizheapi.dao.ArticleCollectionMapper;
 import com.faishze.api.fasizheapi.dao.ArticleMapper;
 import com.faishze.api.fasizheapi.dao.HistoryRecordMapper;
-import com.faishze.api.fasizheapi.dao.query.ArticleQuery;
 import com.faishze.api.fasizheapi.pojo.do0.Article;
 import com.faishze.api.fasizheapi.pojo.do0.entity.AritcleCollectionEntity;
 import com.faishze.api.fasizheapi.pojo.do0.entity.HistoryRecordAboutArticleEntity;
+import com.faishze.api.fasizheapi.query.ArticleQuery;
+import com.faishze.api.fasizheapi.query.Query;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class FasizheApiApplicationTests {
 
     @Test
     public void getArticles() {
-        ArticleQuery articleQuery=new ArticleQuery(null,null,ArticleType.UGC,ArticleQuery.CREATE_TIME,ArticleQuery.DESC);
+        ArticleQuery articleQuery=new ArticleQuery(null,null,null,ArticleType.UGC, Query.CREATE_TIME,Query.DESC);
         for (Article article : articleMapper.listArticlesByQuery(articleQuery)) {
             System.out.println(article);
         }
