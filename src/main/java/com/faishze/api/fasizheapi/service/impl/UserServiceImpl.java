@@ -12,6 +12,8 @@ import com.faishze.api.fasizheapi.util.EncryptUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author masonluo
  * @date 2019/10/23 11:48 PM
@@ -26,44 +28,40 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
 
-    // TODO
     @Override
     public User getByUsername(String username) {
-        return null;
+        return userMapper.findByUsername(username);
     }
 
-    // TODO
     @Override
-    public User get(User user) {
-        return null;
+    public List<User> get(User user) {
+        return userMapper.select(user);
     }
 
-    // TODO
     @Override
-    public User getByUserID(Integer userId) {
-        return null;
+    public User getByUserId(Integer userId) {
+        return userMapper.selectByPrimaryKey(userId);
     }
 
-    // TODO
     @Override
-    public String geUsernameByUserID(Integer userId) {
-        return null;
+    public String geUsernameByUserId(Integer userId) {
+        return userMapper.findUsernameByUserId(userId);
     }
 
     @Override
     public Result<Jwt> login(UserAO user) {
         user.setPassword(EncryptUtils.encrypt(user.getPassword()));
-        User userDo = userMapper.getByUsernameAndPassword(user.getUsername(), user.getPassword());
+        User userDo = userMapper.findByUsernameAndPassword(user.getUsername(), user.getPassword());
         if(userDo != null){
             // 判断用户是否被锁定
             if(!userDo.getStatus()){
-                return Result.fail(ErrorCode.FORBIDDEN);
+                return Result.fail(ErrorCode.FORBIDDEN, "用户已被锁定");
             }
             // 正常，签发jwt
             Jwt jwt = JwtUtils.sign(user.getUsername());
             return Result.success(jwt);
         }
         // 用户名密码不匹配
-        return Result.fail(ErrorCode.UNAUTHORIZED);
+        return Result.fail(ErrorCode.UNAUTHORIZED, " 用户名或者密码不正确");
     }
 }

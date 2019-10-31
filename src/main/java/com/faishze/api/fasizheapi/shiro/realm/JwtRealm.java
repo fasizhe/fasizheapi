@@ -58,7 +58,7 @@ public class JwtRealm extends AuthorizingRealm {
         String token = (String) principalCollection.getPrimaryPrincipal();
         String username = JwtUtils.getUsername(token);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        List<String> roleNameList = roleService.listRoleNameByUsername(username);
+        List<String> roleNameList = roleService.listRoleNamesByUsername(username);
         List<String> permissionNameList = permissionService.listPermissionNameByUsername(username);
         info.addRoles(roleNameList);
         info.addStringPermissions(permissionNameList);

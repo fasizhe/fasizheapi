@@ -19,4 +19,6 @@ public interface ProfileMapper {
     int updateByPrimaryKey(Profile record);
 
     Profile selectByUserID(@Param("userID") Integer id);
+
+    int updateByUserID(Profile profile);
 }

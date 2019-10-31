@@ -5,6 +5,8 @@ import com.faishze.api.fasizheapi.pojo.do0.User;
 import com.faishze.api.fasizheapi.result.Result;
 import com.faishze.api.fasizheapi.pojo.dto.Jwt;
 
+import java.util.List;
+
 /**
  * @author masonluo
  * @date 2019/10/23 11:00 PM
@@ -22,11 +24,11 @@ public interface UserService {
      * @param user 用户类
      * @return 匹配的用户
      */
-    User get(User user);
+    List<User> get(User user);
 
     Result<Jwt> login(UserAO user);
 
-    User getByUserID(Integer userId);
+    User getByUserId(Integer userId);
 
-    String geUsernameByUserID(Integer userId);
+    String geUsernameByUserId(Integer userId);
 }

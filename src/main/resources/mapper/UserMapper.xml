@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.faishze.api.fasizheapi.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="com.faishze.api.fasizheapi.pojo.do0.User">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="username" jdbcType="CHAR" property="username" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="status" jdbcType="BIT" property="status" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <resultMap id="BaseResultMap" type="com.faishze.api.fasizheapi.pojo.do0.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="CHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="status" jdbcType="BIT" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+    id, username, `password`, `status`, create_time, update_time
+  </sql>
+    <sql id="BaseTable">
+    t_user
+  </sql>
+    <sql id="BaseAliasTable">
+    t_user t
+  </sql>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.faishze.api.fasizheapi.pojo.do0.User" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.faishze.api.fasizheapi.pojo.do0.User" useGeneratedKeys="true"
+            keyProperty="id">
     insert into t_user (username, `password`)
     values (#{username,jdbcType=CHAR}, #{password,jdbcType=VARCHAR})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.faishze.api.fasizheapi.pojo.do0.User"
-          >
+    <update id="updateByPrimaryKey" parameterType="com.faishze.api.fasizheapi.pojo.do0.User"
+    >
     update t_user
     set username = #{username,jdbcType=CHAR},
       `password` = #{password,jdbcType=VARCHAR},
@@ -27,13 +39,62 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, username, `password`, `status`, create_time, update_time
     from t_user
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectAll" resultMap="BaseResultMap">
     select id, username, `password`, `status`, create_time, update_time
     from t_user
   </select>
+
+    <select id="findByUsernameAndPassword" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from
+        <include refid="BaseTable"/>
+        where username = #{username} and password = #{password}
+    </select>
+
+    <select id="findByUsername" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from
+        <include refid="BaseTable"/>
+        where username = #{username}
+    </select>
+    <select id="select" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from
+        <include refid="BaseTable"/>
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and uesrname = #{username}
+            </if>
+            <if test="password != null and password != '' ">
+                and password = #{password}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="findUsernameByUserId" resultType="java.lang.String">
+        select username
+        from
+        <include refid="BaseTable"/>
+        where id = #{userId}
+    </select>
 </mapper>

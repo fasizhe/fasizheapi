@@ -10,7 +10,19 @@ import com.faishze.api.fasizheapi.pojo.do0.Oauth;
 public interface OauthService {
     Oauth add(Oauth oauth);
 
-    Oauth getByOauthIDAndOauthType(String openID, OauthType oauthType);
+    /**
+     * 根据openID和oauth类型找到一个记录
+     * @param openId
+     * @param oauthType
+     */
+    Oauth getByOauthIdAndOauthType(String openId, OauthType oauthType);
 
-    boolean bind(Integer id, String redisOauthID, OauthType oauthType);
+    /**
+     * 绑定用户和第三方记录
+     * @param userId
+     * @param openId
+     * @param oauthType
+     * @return
+     */
+    boolean bind(Integer userId, String openId, OauthType oauthType);
 }

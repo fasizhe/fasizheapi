@@ -26,6 +26,42 @@
     t_profile t
   </sql>
 
+    <sql id="BaseUpdateSql">
+        <set>
+            <if test="gender != null">
+                gender = #{gender, typeHandler=com.fasizhe.api.fasizheapi.typeHandler.GenderTypeHandler},
+            </if>
+
+            <if test="avatarUrl != null">
+                avatar_url = #{avatarUrl},
+            </if>
+
+            <if test="nickName != null and nickName != ''">
+                nick_name = #{nickName},
+            </if>
+
+            <if test="fullName != null and fullName != ''">
+                full_name = #{fullName},
+            </if>
+
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+
+            <if test="updateTime != null">
+                update_Time = #{updateTime},
+            </if>
+        </set>
+    </sql>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_profile
     where id = #{id,jdbcType=INTEGER}
@@ -56,7 +92,14 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+    <update id="updateByUserID">
+      update t_profile
+      <include refid="BaseUpdateSql"/>
+      where
+        user_id = #{userId}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, user_id, gender, avatar_url, nick_name, full_name, phone, email, create_time, 
     update_time
     from t_profile

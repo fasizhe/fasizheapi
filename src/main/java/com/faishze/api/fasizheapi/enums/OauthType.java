@@ -1,26 +1,34 @@
 package com.faishze.api.fasizheapi.enums;
 
-import com.faishze.api.fasizheapi.pojo.do0.Oauth;
-
 /**
+ * FIXME 将数据库表中的枚举字段更改为tinyInt，如果数据库读出来一个String，那也需要我们这边定义的name一模一样, 如果以后添加类型，数据库就需要改变表结构，比较麻烦，不如直接一个整形
  * @author masonluo
  * @date 2019/10/26 12:07 AM
  */
 public enum  OauthType {
-    WECHAT(1, "weChat");
+    WECHAT(1, "WECHAT");
 
     private Integer oauthId;
 
-    private String oauthType;
+    private String oauthName;
 
-    OauthType(Integer oauthId, String oauthType) {
+    OauthType(Integer oauthId, String oauthName) {
         this.oauthId = oauthId;
-        this.oauthType = oauthType;
+        this.oauthName = oauthName;
     }
 
-    public static OauthType getByOauthTypeById(Integer id){
+    public static OauthType getOauthTypeById(Integer id){
         for(OauthType oauthType : OauthType.values()){
             if(oauthType.getOauthId().equals(id)){
+                return oauthType;
+            }
+        }
+        return null;
+    }
+
+    public static OauthType getOauthTypeByOauthName(String oauthName){
+        for(OauthType oauthType : OauthType.values()){
+            if(oauthType.getOauthName().equals(oauthName)){
                 return oauthType;
             }
         }
@@ -35,11 +43,11 @@ public enum  OauthType {
         this.oauthId = oauthId;
     }
 
-    public String getOauthType() {
-        return oauthType;
+    public String getOauthName() {
+        return oauthName;
     }
 
-    public void setOauthType(String oauthType) {
-        this.oauthType = oauthType;
+    public void setOauthName(String oauthName) {
+        this.oauthName = oauthName;
     }
 }

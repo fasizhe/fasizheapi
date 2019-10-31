@@ -79,7 +79,7 @@ public class WeChatManagerImpl implements WeChatManager {
         if(!response.getErrcode().equals(0)){
             return Result.fail(ErrorCode.UNAUTHORIZED, response.getErrmsg());
         }
-        Oauth wxUser = oauthService.getByOauthIDAndOauthType(response.getOpenid(), OauthType.WECHAT);
+        Oauth wxUser = oauthService.getByOauthIdAndOauthType(response.getOpenid(), OauthType.WECHAT);
         if(wxUser == null){
             Oauth oauth = new Oauth();
             oauth.setOauthId(response.getOpenid());
@@ -97,11 +97,11 @@ public class WeChatManagerImpl implements WeChatManager {
         }
         // 绑定了用户，则进行签证
         // TODO 通用mapper，进行根据关键的字段查询
-        String username = userService.geUsernameByUserID(wxUser.getUserId());
+        String username = userService.geUsernameByUserId(wxUser.getUserId());
         Map<String, String> claims = new HashMap<>();
         claims.put("username", username);
         claims.put("open_id", wxUser.getOauthId());
-        claims.put("open_type", wxUser.getOauthType().getOauthType());
+        claims.put("open_type", wxUser.getOauthType().getOauthName());
         return Result.success(JwtUtils.sign(claims));
     }
 
