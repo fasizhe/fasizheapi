@@ -49,12 +49,4 @@ public class FasizheApiApplicationTests {
         article.setType(ArticleType.UGC);
         articleMapper.saveArticle(article);
     }
-
-    @Test
-    public void testUploadFile(){
-        File file = new File("/Users/belle/Desktop/lunbo/img2.png");
-        if(file.exists())
-            System.out.println(fileService.saveAndGetUrl(file, "avatar"));
-    }
-
 }

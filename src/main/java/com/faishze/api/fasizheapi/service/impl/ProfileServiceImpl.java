@@ -7,6 +7,8 @@ import com.faishze.api.fasizheapi.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.URL;
+
 /**
  * @author masonluo
  * @date 2019/10/27 11:28 PM
@@ -27,6 +29,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public int uploadAvatarUrl(String avatarUrl) {
+
         return 0;
     }
 

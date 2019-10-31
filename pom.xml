@@ -190,7 +190,15 @@
             <artifactId>tomcat-embed-el</artifactId>
             <version>9.0.22</version>
         </dependency>
+
+        <!-- 根据ContentType获取文件后缀的jar包-->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>1.22</version>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>
