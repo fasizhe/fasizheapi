@@ -1,12 +1,21 @@
 package com.faishze.api.fasizheapi.manager.impl;
 
+import com.faishze.api.fasizheapi.enums.OauthType;
+import com.faishze.api.fasizheapi.global.Redis;
 import com.faishze.api.fasizheapi.manager.WeChatManager;
+import com.faishze.api.fasizheapi.pojo.do0.Oauth;
+import com.faishze.api.fasizheapi.result.ErrorCode;
 import com.faishze.api.fasizheapi.result.Result;
+import com.faishze.api.fasizheapi.service.OauthService;
+import com.faishze.api.fasizheapi.service.UserService;
+import com.faishze.api.fasizheapi.shiro.utils.JwtUtils;
+import com.faishze.api.fasizheapi.util.EncryptUtils;
 import com.faishze.api.fasizheapi.util.ftp.FTPClientTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,7 +39,16 @@ public class WeChatManagerImpl implements WeChatManager {
     private RestTemplate restTemplate;
 
     @Autowired
-    FTPClientTemplate ftpClientTemplate;
+    private FTPClientTemplate ftpClientTemplate;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
+
+    @Autowired
+    private OauthService oauthService;
+
+    @Autowired
+    private UserService userService;
 
     @Value("${mini.program.appID}")
     private String appID;
@@ -46,42 +64,93 @@ public class WeChatManagerImpl implements WeChatManager {
     @Value("mini.program.api.userInfo")
     private String userInfoApi;
 
+    /**
+     * 微信用户登录，返回结果有三种情况：
+     * 1、用户首次登录，需要绑定
+     * 2、用户首次登录，但是因某些原因新增失败
+     * 3、用户非首次登录，但暂未绑定系统用户
+     * 4、用户登录成功
+     * @param code
+     * @return
+     */
     @Override
     public Result login(String code) {
-        Code2SessionResult apiResult = code2SessionApi(code);
-        if(!apiResult.getErrcode().equals(0)){
-            return Result.unAuthorization();
+        Code2SessionResponse response = code2Session(code);
+        if(!response.getErrcode().equals(0)){
+            return Result.fail(ErrorCode.UNAUTHORIZED, response.getErrmsg());
         }
-        return null;
+        Oauth wxUser = oauthService.getByOauthIdAndOauthType(response.getOpenid(), OauthType.WECHAT);
+        if(wxUser == null){
+            Oauth oauth = new Oauth();
+            oauth.setOauthId(response.getOpenid());
+            oauth.setOauthType(OauthType.WECHAT);
+            // 判断是否插入成功
+            if(oauthService.add(oauth).getUserId() != null){
+                return Result.needBind(generateNeedBindingData(response.getOpenid(), OauthType.WECHAT));
+            }else{
+                return Result.internalError("服务器错误");
+            }
+        }
+        // 如果未进行绑定，则让其跳转到用户绑定页面
+        if(wxUser.getUserId() == null){
+            return Result.needBind(response.getOpenid());
+        }
+        // 绑定了用户，则进行签证
+        // TODO 通用mapper，进行根据关键的字段查询
+        String username = userService.geUsernameByUserId(wxUser.getUserId());
+        Map<String, String> claims = new HashMap<>();
+        claims.put("username", username);
+        claims.put("open_id", wxUser.getOauthId());
+        claims.put("open_type", wxUser.getOauthType().getOauthName());
+        return Result.success(JwtUtils.sign(claims));
     }
 
     /**
-     * 调用code2SessionAPI进行获取access_token等参数
-     * @param code 前端传来的code
-     * @return 封装好的微信返回值
+     * 进行微信小程序code2Session接口的调用
+     * @param code 前端传来的用户临时凭证
+     * @return 封装好的返回实体类
      */
-    @Override
-    public Code2SessionResult code2SessionApi(String code) {
-        RestTemplate restTemplate = new RestTemplate();
-        // 构造参数
+    public Code2SessionResponse code2Session(String code){
         Map<String, String> params = new HashMap<>();
         params.put("appid", appID);
         params.put("secret", appSecret);
         params.put("js_code", code);
         params.put("grant_type", "authorization_code");
-        Code2SessionResult result = restTemplate.getForObject(code2SessionApi, Code2SessionResult.class, params);
-        return result;
+        return restTemplate.getForObject(userInfoApi, Code2SessionResponse.class, params);
     }
 
-    @Override
-    public String getAvatar(String accessToken, String openID) {
-        return null;
+    /**
+     * 需要绑定时，返回给前端的数据
+     * @param openID
+     * @return
+     */
+    private Map<String, String> generateNeedBindingData(String openID, OauthType oauthType){
+        String code = generateEncryptCode(openID);
+        code = EncryptUtils.encrypt(code);
+        // 存进redis，以便查验
+        // 使用Hash结构, 存放open_id和open_type
+        redisTemplate.opsForHash().put(Redis.OAUTH_USER_BINDING_CODE_PREFIX + code, "open_id", openID);
+        redisTemplate.opsForHash().put(Redis.OAUTH_USER_BINDING_CODE_PREFIX + code, "open_type_id", oauthType.getOauthId());
+        Map<String, String> map = new HashMap<>();
+        map.put("target_url", "/oauth/{oauth_id}/user/{username}");
+        map.put("code", code);
+        map.put("oauth_type", oauthType.getOauthId().toString());
+        return map;
+    }
+    /**
+     * 加密openID,获取绑定时需要的凭证
+     * @param openID 用户openID
+     * @return code
+     */
+    private String generateEncryptCode(String openID){
+        String code = openID + System.currentTimeMillis();
+        return EncryptUtils.encrypt(code);
     }
 
     /**
      * 微信返回实体类
      */
-    public static class Code2SessionResult{
+    public static class Code2SessionResponse{
         private String openid;
 
         private String session_key;

@@ -13,6 +13,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 描述: 一些类库的单例
@@ -74,5 +76,14 @@ public class SingletonBeansConfig {
         return DozerBeanMapperBuilder.buildDefault();
     }
 
-
+    /**
+     * 线程池
+     * @author masonluo
+     * @return FixedThreadPool
+     */
+    @Bean("ThreadPool")
+    public ExecutorService executorService(){
+        int availableThread = Runtime.getRuntime().availableProcessors();
+        return Executors.newFixedThreadPool(availableThread);
+    }
 }

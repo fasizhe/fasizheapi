@@ -44,7 +44,8 @@ public class ShiroConfig {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         // 添加自己过滤器
         Map<String, Filter> filterMap = new HashMap<>();
-        filterMap.put("JwtFilter", new JwtFilter());
+        // TODO 打开验证
+//        filterMap.put("JwtFilter", new JwtFilter());
         factoryBean.setFilters(filterMap);
 
         factoryBean.setSecurityManager(securityManager);
@@ -52,8 +53,11 @@ public class ShiroConfig {
          * 自定义url规则，前期先手动定义，后期根据数据库进行导入
          */
         Map<String, String> filterRuleMap = new HashMap<>();
+        // TODO 后期删掉这条语句
+        filterRuleMap.put("/**", "anon");
         filterRuleMap.put("/**/login*/**", "anon");
         filterRuleMap.put("/**/register*/**", "anon");
+        filterRuleMap.put("/**/user", "anon");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }

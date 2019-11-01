@@ -24,9 +24,10 @@ public class ErrorHandlerAspect {
     /**
      * 设置拦截点为所有的Controller
      */
-    @Pointcut("execution(* com.faishze.api.fasizheapi.controller.*.*(..))")
+    @Pointcut("execution(* com.faishze.api.fasizheapi.controller.*.*.*(..))")
     public void pointCut(){
     }
+
 
     /**
      * 对返回结果的错误进行解析，只对返回为Result的进行解析
@@ -58,5 +59,4 @@ public class ErrorHandlerAspect {
         }
         return new ResponseEntity<>(errorResponse, errorCode.getHttpStatus());
     }
-
 }

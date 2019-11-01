@@ -16,4 +16,18 @@ public interface RoleMapper {
     List<Role> selectAll();
 
     int updateByPrimaryKey(Role record);
+
+    /**
+     * 获取username的所有角色
+     * @param username 用户名
+     * @return 角色列表
+     */
+    List<Role> listRolesByUsername(String username);
+
+    /**
+     * 获取username的所有Role的名称
+     * @param username 用户名
+     * @return 角色名称列表
+     */
+    List<String> listRoleNamesByUsername(String username);
 }

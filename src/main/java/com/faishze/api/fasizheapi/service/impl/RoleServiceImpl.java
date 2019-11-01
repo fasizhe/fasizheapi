@@ -1,7 +1,9 @@
 package com.faishze.api.fasizheapi.service.impl;
 
+import com.faishze.api.fasizheapi.dao.RoleMapper;
 import com.faishze.api.fasizheapi.pojo.do0.Role;
 import com.faishze.api.fasizheapi.service.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,13 +14,21 @@ import java.util.List;
  */
 @Service
 public class RoleServiceImpl implements RoleService {
-    @Override
-    public List<Role> listByUsername(String username) {
-        return null;
+
+    private final RoleMapper roleMapper;
+
+    @Autowired
+    public RoleServiceImpl(RoleMapper roleMapper) {
+        this.roleMapper = roleMapper;
     }
 
     @Override
-    public List<String> listRoleNameByUsername(String username) {
-        return null;
+    public List<Role> listRolesByUsername(String username) {
+        return roleMapper.listRolesByUsername(username);
+    }
+
+    @Override
+    public List<String> listRoleNamesByUsername(String username) {
+        return roleMapper.listRoleNamesByUsername(username);
     }
 }
