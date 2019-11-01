@@ -7,16 +7,6 @@ package com.faishze.api.fasizheapi.query;
  * @since 2019/10/26
  */
 public class ArticleCommentQuery {
-    //要排序的字段
-    public static final String ID="id";
-    public static final String LIKE_NUM="like_num";
-    public static final String REPLY_NUM="reply_num";
-    public static final String CREATE_TIME="create_time";
-    public static final String UPDATE_TIME="update_time";
-
-    //排序的方式
-    public static final String ASC="ASC";
-    public static final String DESC="DESC";
 
     //条件
     private Integer articleId;
@@ -24,7 +14,7 @@ public class ArticleCommentQuery {
     private String userNickName;
 
     private String orderField;
-    private String orderType=ASC;
+    private String orderType="ASC";
 
     public ArticleCommentQuery(){}
 

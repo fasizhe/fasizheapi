@@ -21,7 +21,7 @@ public interface ArticleService {
      */
     Result saveArticleDTO(ArticleDTO articleDTO);
 
-    int deleteArticleDTO(Integer id);
+    Result deleteArticleDTO(Integer id);
 
     Result getArticleDTO(Integer id);
 

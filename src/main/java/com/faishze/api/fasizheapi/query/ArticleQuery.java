@@ -15,6 +15,7 @@ public class ArticleQuery {
     private Integer userId;
     private String userNickName;
     private ArticleType type;
+
     private String orderField;
     private String orderType="ASC";
 

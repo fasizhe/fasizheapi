@@ -51,8 +51,9 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public int deleteArticleDTO(Integer id) {
-        return articleMapper.deleteArticle(id);
+    public Result deleteArticleDTO(Integer id) {
+        articleMapper.deleteArticle(id);
+        return Result.success();
     }
 
     @Override

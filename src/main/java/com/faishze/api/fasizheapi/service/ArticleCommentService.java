@@ -1,8 +1,8 @@
 package com.faishze.api.fasizheapi.service;
 
-import com.faishze.api.fasizheapi.query.ArticleCommentQuery;
 import com.faishze.api.fasizheapi.pojo.dto.ArticleCommentDTO;
-import com.github.pagehelper.Page;
+import com.faishze.api.fasizheapi.query.ArticleCommentQuery;
+import com.faishze.api.fasizheapi.result.Result;
 
 /**
  * @author 杜科
@@ -12,16 +12,19 @@ import com.github.pagehelper.Page;
  */
 public interface ArticleCommentService {
 
-    ArticleCommentDTO saveArticleCommentDTO(ArticleCommentDTO record);
+    Result saveArticleCommentDTO(ArticleCommentDTO record);
 
-    int deleteArticleCommentDTO(Long id);
+    Result deleteArticleCommentDTO(Long id);
 
-    ArticleCommentDTO getArticleCommentDTO(Long id);
+    Result getArticleCommentDTO(Long id);
 
-    ArticleCommentDTO updateArticleCommentDTO(ArticleCommentDTO record);
+    Result updateArticleCommentDTO(ArticleCommentDTO record);
 
-    Page<ArticleCommentDTO> listArticleCommentDTOs(Integer pageNum, Integer pageSize);
+    Result listArticleCommentDTOs(Integer pageNum, Integer pageSize);
 
-    Page<ArticleCommentDTO> listArticleCommentDTOsByQuery(Integer pageNum, Integer pageSize,
+    Result listArticleCommentDTOsByQuery(Integer pageNum, Integer pageSize,
                                                           ArticleCommentQuery articleCommentQuery);
+
+    //删除评论
+    Result clearArticleCommentDTO(Long id);
 }

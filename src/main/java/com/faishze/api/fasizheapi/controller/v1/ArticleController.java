@@ -6,6 +6,7 @@ import com.faishze.api.fasizheapi.pojo.ao.ArticleOldAO;
 import com.faishze.api.fasizheapi.pojo.dto.ArticleDTO;
 import com.faishze.api.fasizheapi.pojo.vo.ArticleVO;
 import com.faishze.api.fasizheapi.query.ArticleQuery;
+import com.faishze.api.fasizheapi.result.Result;
 import com.faishze.api.fasizheapi.service.ArticleService;
 import com.faishze.api.fasizheapi.service.UserService;
 import com.github.pagehelper.Page;
@@ -84,5 +85,19 @@ public class ArticleController {
         ArticleVO articleVO;
         articleVO = dozerMapper.map(articleDTO, ArticleVO.class);
         return articleVO;
+    }
+
+    @DeleteMapping("/deleteOneById")
+    public Result deleteOneById(@RequestParam("articleId") Integer articleId){
+        articleService.deleteArticleDTO(articleId);
+        return Result.success();
+    }
+
+    @DeleteMapping("/deleteListByIds")
+    public Result deleteListByIds(@RequestParam("articleIds") List<Integer> articleIds){
+        for (Integer articleId : articleIds) {
+            articleService.deleteArticleDTO(articleId);
+        }
+        return Result.success();
     }
 }
