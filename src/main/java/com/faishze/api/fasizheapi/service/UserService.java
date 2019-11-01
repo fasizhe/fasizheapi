@@ -1,5 +1,6 @@
 package com.faishze.api.fasizheapi.service;
 
+import com.faishze.api.fasizheapi.pojo.ao.RegisterAO;
 import com.faishze.api.fasizheapi.pojo.ao.UserAO;
 import com.faishze.api.fasizheapi.pojo.do0.User;
 import com.faishze.api.fasizheapi.result.Result;
@@ -31,4 +32,6 @@ public interface UserService {
     User getByUserId(Integer userId);
 
     String geUsernameByUserId(Integer userId);
+
+    Result register(RegisterAO registerAO);
 }

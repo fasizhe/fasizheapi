@@ -121,6 +121,7 @@ public enum ErrorCode {
     NEED_BIND(HttpStatus.TEMPORARY_REDIRECT,
             "NEED_BIND", "The third party user must be bind an account in our system");
 
+
     private final HttpStatus httpStatus;
     private final String error;
     private final String message;

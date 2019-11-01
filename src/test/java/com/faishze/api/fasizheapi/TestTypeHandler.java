@@ -21,9 +21,13 @@ public class TestTypeHandler {
     @Autowired
     OauthMapper mapper;
 
+    private String pattern = "^[1][3,4,5,7,8][0-9]{9}$";
+
     @Test
     public void test(){
         Oauth query = mapper.selectByOauthIdAndOauthType("111", OauthType.WECHAT);
         System.out.println();
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.faishze.api.fasizheapi.dao;
 
 import com.faishze.api.fasizheapi.pojo.do0.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface UserMapper {
      * @param username 用户名
      * @param password 密码
      */
-    User findByUsernameAndPassword(String username, String password);
+    User findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
     /**
      * 根据用户名查询用户

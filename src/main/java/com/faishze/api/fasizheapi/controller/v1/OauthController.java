@@ -62,7 +62,7 @@ public class OauthController {
      * @param oauthBindAO 绑定所需要的用户信息
      */
     @PostMapping("/oauth/{oauth_id}/user/{username}")
-    public Result bindUser(@PathVariable("oauth_id") String oauthID,
+    public Object bindUser(@PathVariable("oauth_id") String oauthID,
                            @PathVariable("username") String username,
                            @RequestBody @Valid OauthBindAO oauthBindAO,
                            BindingResult errors) {

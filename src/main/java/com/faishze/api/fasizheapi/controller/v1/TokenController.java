@@ -2,7 +2,6 @@ package com.faishze.api.fasizheapi.controller.v1;
 
 import com.faishze.api.fasizheapi.manager.WeChatManager;
 import com.faishze.api.fasizheapi.pojo.ao.UserAO;
-import com.faishze.api.fasizheapi.pojo.dto.Jwt;
 import com.faishze.api.fasizheapi.result.ErrorCode;
 import com.faishze.api.fasizheapi.result.Result;
 import com.faishze.api.fasizheapi.service.UserService;
@@ -50,7 +49,13 @@ public class TokenController {
         return userService.login(user);
     }
 
-    public Result<Jwt> weChatLogin(@RequestParam("code") String code) {
+    /**
+     * 微信用户进行登录，获取token
+     *
+     * @param code 登录凭证，微信端下发的
+     */
+    @GetMapping("/token/wx")
+    public Object weChatLogin(@RequestParam("code") String code) {
         if (StringUtils.isEmpty(code)) {
             return Result.fail(ErrorCode.INVALID_PARAMETER_IS_BLANK);
         }

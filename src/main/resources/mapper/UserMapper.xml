@@ -26,8 +26,8 @@
   </delete>
     <insert id="insert" parameterType="com.faishze.api.fasizheapi.pojo.do0.User" useGeneratedKeys="true"
             keyProperty="id">
-    insert into t_user (username, `password`)
-    values (#{username,jdbcType=CHAR}, #{password,jdbcType=VARCHAR})
+    insert into t_user (username, `password`,`status`)
+    values (#{username,jdbcType=CHAR}, #{password,jdbcType=VARCHAR},#{status})
   </insert>
     <update id="updateByPrimaryKey" parameterType="com.faishze.api.fasizheapi.pojo.do0.User"
     >
