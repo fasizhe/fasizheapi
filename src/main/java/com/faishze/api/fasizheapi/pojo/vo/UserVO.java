@@ -17,15 +17,12 @@ public class UserVO implements Serializable {
 
     private String username;
 
-    private String password;
-
     public UserVO() {
     }
 
     public UserVO(Integer id, String username, String password) {
         this.id = id;
         this.username = username;
-        this.password = password;
     }
 
     public Integer getId() {
@@ -44,20 +41,11 @@ public class UserVO implements Serializable {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public String toString() {
         return "UserVO{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 }

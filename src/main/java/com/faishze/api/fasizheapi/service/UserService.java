@@ -1,9 +1,12 @@
 package com.faishze.api.fasizheapi.service;
 
+import com.faishze.api.fasizheapi.pojo.ao.RegisterAO;
 import com.faishze.api.fasizheapi.pojo.ao.UserAO;
 import com.faishze.api.fasizheapi.pojo.do0.User;
 import com.faishze.api.fasizheapi.result.Result;
 import com.faishze.api.fasizheapi.pojo.dto.Jwt;
+
+import java.util.List;
 
 /**
  * @author masonluo
@@ -22,7 +25,13 @@ public interface UserService {
      * @param user 用户类
      * @return 匹配的用户
      */
-    User get(User user);
+    List<User> get(User user);
 
     Result<Jwt> login(UserAO user);
+
+    User getByUserId(Integer userId);
+
+    String geUsernameByUserId(Integer userId);
+
+    Result register(RegisterAO registerAO);
 }

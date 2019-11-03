@@ -27,4 +27,11 @@ public final class FileConstant {
         HOST = PropertiesUtils.getProperty("ftp.prefix.host", "application.properties");
     }
 
+    /**
+     * 保存头像的文件夹
+     */
+    public final static String AVATAR_PATH;
+    static {
+        AVATAR_PATH = "avatar";
+    }
 }

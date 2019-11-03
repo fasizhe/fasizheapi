@@ -15,12 +15,12 @@ public interface RoleService {
      * @param username 用户名
      * @return 用户拥有的角色
      */
-    List<Role> listByUsername(String username);
+    List<Role> listRolesByUsername(String username);
 
     /**
      * 根据用户名获取角色名
      * @param username
      * @return
      */
-    List<String> listRoleNameByUsername(String username);
+    List<String> listRoleNamesByUsername(String username);
 }
