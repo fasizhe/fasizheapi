@@ -1,15 +1,18 @@
-package com.faishze.api.fasizheapi.pojo.do0;
+package com.faishze.api.fasizheapi.pojo.vo;
 
-import java.util.Date;
+/**
+ * @author 杜科
+ * @description
+ * @contact 15521177704
+ * @since 2019/11/3
+ */
+public class ArticleCommentLikeVO {
 
-public class ArticleCommentLike{
     private Long id;
 
-    private Long commentId;
+    private Integer commentId;
 
     private Integer userId;
-
-    private Date createTime;
 
     public Long getId() {
         return id;
@@ -19,11 +22,11 @@ public class ArticleCommentLike{
         this.id = id;
     }
 
-    public Long getCommentId() {
+    public Integer getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(Long commentId) {
+    public void setCommentId(Integer commentId) {
         this.commentId = commentId;
     }
 
@@ -35,21 +38,12 @@ public class ArticleCommentLike{
         this.userId = userId;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
     @Override
     public String toString() {
-        return "ArticleCommentLike{" +
+        return "ArticleCommentLikeVO{" +
                 "id=" + id +
                 ", commentId=" + commentId +
                 ", userId=" + userId +
-                ", createTime=" + createTime +
                 '}';
     }
 }

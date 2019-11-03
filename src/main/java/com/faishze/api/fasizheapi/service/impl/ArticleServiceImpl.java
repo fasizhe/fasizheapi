@@ -99,6 +99,22 @@ public class ArticleServiceImpl implements ArticleService {
         return result ;
     }
 
+    @Override
+    public Result banArticleDTO(Integer id){
+        Article article=articleMapper.getArticle(id);
+        article.setAvailable(false);
+        articleMapper.updateArticle(article);
+        return Result.success();
+    }
+
+    @Override
+    public Result riseViewNum(Integer id){
+        Article article=articleMapper.getArticle(id);
+        article.setViewNum(article.getViewNum()+1);
+        articleMapper.updateArticle(article);
+        return Result.success();
+    }
+
 //    public Page<ArticleDTO> listArticleDTOsByAvailableOderByLikeNumDESC(Integer pageNum, Integer pageSize){
 //        ArticleQuery articleQuery=new ArticleQuery(true,null,null,null,ArticleQuery.LIKE_NUM,ArticleQuery.DESC);
 //        return listArticleDTOsByQuery(pageNum,pageSize,articleQuery);

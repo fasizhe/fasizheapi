@@ -3,9 +3,11 @@ package com.faishze.api.fasizheapi.service.impl;
 import com.faishze.api.fasizheapi.dao.ArticleCommentMapper;
 import com.faishze.api.fasizheapi.pojo.do0.ArticleComment;
 import com.faishze.api.fasizheapi.pojo.dto.ArticleCommentDTO;
+import com.faishze.api.fasizheapi.pojo.dto.ArticleDTO;
 import com.faishze.api.fasizheapi.query.ArticleCommentQuery;
 import com.faishze.api.fasizheapi.result.Result;
 import com.faishze.api.fasizheapi.service.ArticleCommentService;
+import com.faishze.api.fasizheapi.service.ArticleService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.dozer.Mapper;
@@ -27,16 +29,25 @@ public class ArticleCommentServiceImpl implements ArticleCommentService {
     ArticleCommentMapper articleCommentMapper;
 
     @Autowired
+    ArticleService articleService;
+
+    @Autowired
     Mapper dozerMapper;
 
     @Override
     public Result saveArticleCommentDTO(ArticleCommentDTO record) {
         //做入库前的处理
-
         ArticleComment articleComment=dozerMapper.map(record,ArticleComment.class);
         articleCommentMapper.saveArticleComment(articleComment);
         record.setId(articleComment.getId());
         Result result=Result.success(record);
+
+        //文章评论数+1
+        Integer articleId=record.getArticleId();
+        ArticleDTO articleDTO= (ArticleDTO) articleService.getArticleDTO(articleId).getData();
+        articleDTO.setCommentNum(articleDTO.getCollectionNum()+1);
+        articleService.updateArticleDTO(articleDTO);
+
         return result;
     }
 

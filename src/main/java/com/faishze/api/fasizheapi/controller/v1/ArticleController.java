@@ -41,6 +41,8 @@ public class ArticleController {
         ArticleVO articleVO;
         ArticleDTO articleDTO = (ArticleDTO) articleService.getArticleDTO(articleId).getData();
         articleVO = dozerMapper.map(articleDTO, ArticleVO.class);
+        //文章浏览数+1
+        articleService.riseViewNum(articleId);
         return articleVO;
     }
 
@@ -97,6 +99,20 @@ public class ArticleController {
     public Result deleteListByIds(@RequestParam("articleIds") List<Integer> articleIds){
         for (Integer articleId : articleIds) {
             articleService.deleteArticleDTO(articleId);
+        }
+        return Result.success();
+    }
+
+    @PutMapping("/banOneById")
+    public Result banOneById(@RequestParam("articleId") Integer articleId){
+        articleService.banArticleDTO(articleId);
+        return Result.success();
+    }
+
+    @PutMapping("/banListByIds")
+    public Result banListByIds(@RequestParam("articleIds") List<Integer> articleIds){
+        for (Integer articleId : articleIds) {
+            articleService.banArticleDTO(articleId);
         }
         return Result.success();
     }

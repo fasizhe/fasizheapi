@@ -1,18 +1,19 @@
 package com.faishze.api.fasizheapi.dao;
 
 import com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReplyLike;
+import com.github.pagehelper.Page;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 @Repository
 public interface ArticleCommentReplyLikeMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteArticleCommentReplyLike(Long id);
 
-    int insert(ArticleCommentReplyLike record);
+    int saveArticleCommentReplyLike(ArticleCommentReplyLike record);
 
-    ArticleCommentReplyLike selectByPrimaryKey(Long id);
+    ArticleCommentReplyLike getArticleCommentReplyLike(Long id);
 
-    List<ArticleCommentReplyLike> selectAll();
+    Page<ArticleCommentReplyLike> listArticleCommentReplyLikes();
 
-    int updateByPrimaryKey(ArticleCommentReplyLike record);
+    int updateArticleCommentReplyLike(ArticleCommentReplyLike record);
+
+    ArticleCommentReplyLike getArticleCommentReplyLikeByUserIdAndReplyId(Integer userId, Long replyId);
 }

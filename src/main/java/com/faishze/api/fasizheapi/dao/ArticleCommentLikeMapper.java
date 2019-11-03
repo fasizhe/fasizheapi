@@ -6,15 +6,15 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ArticleCommentLikeMapper {
-    int deleteArticleComment(Long id);
+    int deleteArticleCommentLike(Long id);
 
-    int saveArticleComment(ArticleCommentLike record);
+    int saveArticleCommentLike(ArticleCommentLike record);
 
-    ArticleCommentLike getArticleComment(Long id);
+    ArticleCommentLike getArticleCommentLike(Long id);
 
-    Page<ArticleCommentLike> listArticleComments();
+    Page<ArticleCommentLike> listArticleCommentLikes();
 
-    int updateArticleComment(ArticleCommentLike record);
+    int updateArticleCommentLike(ArticleCommentLike record);
 
- 
+    ArticleCommentLike getArticleCommentLikeByUserIdAndCommentId(Integer userId, Long commmentId);
 }

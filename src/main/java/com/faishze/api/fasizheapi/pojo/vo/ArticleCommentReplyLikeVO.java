@@ -1,16 +1,18 @@
-package com.faishze.api.fasizheapi.pojo.do0;
+package com.faishze.api.fasizheapi.pojo.vo;
 
-import java.io.Serializable;
-import java.util.Date;
+/**
+ * @author 杜科
+ * @description
+ * @contact 15521177704
+ * @since 2019/11/3
+ */
+public class ArticleCommentReplyLikeVO {
 
-public class ArticleCommentReplyLike implements Serializable {
     private Long id;
 
     private Long replyId;
 
     private Integer userId;
-
-    private Date createTime;
 
     public Long getId() {
         return id;
@@ -36,21 +38,12 @@ public class ArticleCommentReplyLike implements Serializable {
         this.userId = userId;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
     @Override
     public String toString() {
-        return "ArticleCommentReplyLike{" +
+        return "ArticleCommentReplyLikeVO{" +
                 "id=" + id +
                 ", replyId=" + replyId +
                 ", userId=" + userId +
-                ", createTime=" + createTime +
                 '}';
     }
 }

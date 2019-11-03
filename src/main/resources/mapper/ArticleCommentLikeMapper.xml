@@ -3,37 +3,41 @@
 <mapper namespace="com.faishze.api.fasizheapi.dao.ArticleCommentLikeMapper">
   <resultMap id="BaseResultMap" type="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentLike">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="comment_id" jdbcType="INTEGER" property="commentId" />
+    <result column="comment_id" jdbcType="BIGINT" property="commentId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
-  <delete id="deleteArticleComment" parameterType="java.lang.Long">
+  <delete id="deleteArticleCommentLike" parameterType="java.lang.Long">
     delete from t_article_comment_like
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="saveArticleComment" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentLike">
+  <insert id="saveArticleCommentLike" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentLike">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_article_comment_like (comment_id, user_id, create_time
+    insert into t_article_comment_like (comment_id, user_id
       )
-    values (#{commentId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+    values (#{commentId,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}
       )
   </insert>
-  <update id="updateArticleComment" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentLike">
+  <update id="updateArticleCommentLike" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentLike">
     update t_article_comment_like
-    set comment_id = #{commentId,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+    set comment_id = #{commentId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="getArticleComment" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="getArticleCommentLike" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select id, comment_id, user_id, create_time
     from t_article_comment_like
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="listArticleComments" resultMap="BaseResultMap">
+  <select id="listArticleCommentLikes" resultMap="BaseResultMap">
     select id, comment_id, user_id, create_time
     from t_article_comment_like
+  </select>
+  <select id="getArticleCommentLikeByUserIdAndCommentId" resultMap="BaseResultMap">
+    select id, comment_id, user_id, create_time
+    from t_article_comment_like as t
+    where t.user_id = #{userId} and t.comment_id = #{commentId} limit 1;
   </select>
 </mapper>

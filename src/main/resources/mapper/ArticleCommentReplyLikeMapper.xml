@@ -3,37 +3,42 @@
 <mapper namespace="com.faishze.api.fasizheapi.dao.ArticleCommentReplyLikeMapper">
   <resultMap id="BaseResultMap" type="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReplyLike">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="reply_id" jdbcType="INTEGER" property="replyId" />
+    <result column="reply_id" jdbcType="BIGINT" property="replyId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteArticleCommentReplyLike" parameterType="java.lang.Long">
     delete from t_article_comment_reply_like
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReplyLike">
+  <insert id="saveArticleCommentReplyLike" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReplyLike">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_article_comment_reply_like (reply_id, user_id, create_time
+    insert into t_article_comment_reply_like (reply_id, user_id
       )
-    values (#{replyId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+    values (#{replyId,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}
       )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReplyLike">
+  <update id="updateArticleCommentReplyLike" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReplyLike">
     update t_article_comment_reply_like
-    set reply_id = #{replyId,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+    set reply_id = #{replyId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="getArticleCommentReplyLike" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select id, reply_id, user_id, create_time
     from t_article_comment_reply_like
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+  <select id="listArticleCommentReplyLikes" resultMap="BaseResultMap">
     select id, reply_id, user_id, create_time
     from t_article_comment_reply_like
+  </select>
+  <select id="getArticleCommentReplyLikeByUserIdAndReplyId"
+          resultType="com.faishze.api.fasizheapi.pojo.do0.ArticleCommentReplyLike">
+    select id, reply_id, user_id, create_time
+    from t_article_comment_reply_like as t
+    where t.reply_id = #{replyId} and t.user_id = #{userId} limit 1
   </select>
 </mapper>

@@ -1,9 +1,8 @@
 package com.faishze.api.fasizheapi.dao;
 
 import com.faishze.api.fasizheapi.pojo.do0.ArticleLike;
+import com.github.pagehelper.Page;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface ArticleLikeMapper {
@@ -13,8 +12,9 @@ public interface ArticleLikeMapper {
 
     ArticleLike getArticleLike(Long id);
 
-    List<ArticleLike> listArticleLikes();
+    Page<ArticleLike> listArticleLikes();
 
     int updateArticleLike(ArticleLike record);
 
+    ArticleLike getArticleLikeByUserIdAndArticleId(Integer userId,Integer articleId);
 }

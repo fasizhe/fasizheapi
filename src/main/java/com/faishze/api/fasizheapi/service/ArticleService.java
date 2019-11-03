@@ -40,4 +40,10 @@ public interface ArticleService {
      */
     Result listArticleDTOsByQuery(Integer pageNum, Integer pageSize, ArticleQuery articleQuery);
 
+    //封禁文章
+    Result banArticleDTO(Integer id);
+
+    //增加文章浏览数
+    Result riseViewNum(Integer id);
+
 }

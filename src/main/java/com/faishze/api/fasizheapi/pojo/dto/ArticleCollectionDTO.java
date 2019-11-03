@@ -1,4 +1,4 @@
-package com.faishze.api.fasizheapi.pojo.do0.entity;
+package com.faishze.api.fasizheapi.pojo.dto;
 
 import com.faishze.api.fasizheapi.pojo.do0.Article;
 
@@ -6,11 +6,11 @@ import java.util.Date;
 
 /**
  * @author 杜科
- * @description 文章收藏的实体类，封装文章和被收藏的时间
+ * @description
  * @contact 15521177704
- * @since 2019/10/26
+ * @since 2019/11/2
  */
-public class AritcleCollectionEntity {
+public class ArticleCollectionDTO {
 
     private Long id;
 
@@ -54,7 +54,7 @@ public class AritcleCollectionEntity {
 
     @Override
     public String toString() {
-        return "AritcleCollectionEntity{" +
+        return "ArticleCollectionDTO{" +
                 "id=" + id +
                 ", userId=" + userId +
                 ", article=" + article +
