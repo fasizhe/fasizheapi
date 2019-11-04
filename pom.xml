@@ -205,6 +205,7 @@
         </dependency>
 
         <!-- 根据ContentType获取文件后缀的jar包-->
+        <!-- https://mvnrepository.com/artifact/org.apache.tika/tika-core -->
         <dependency>
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-core</artifactId>

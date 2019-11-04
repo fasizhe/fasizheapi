@@ -6,7 +6,6 @@ import com.faishze.api.fasizheapi.pojo.dto.ArticleCollectionDTO;
 import com.faishze.api.fasizheapi.pojo.vo.ArticleCollectionVO;
 import com.faishze.api.fasizheapi.result.Result;
 import com.faishze.api.fasizheapi.service.ArticleCollectionService;
-import org.apache.ibatis.annotations.Delete;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -21,7 +20,8 @@ import java.util.List;
  * @contact 15521177704
  * @since 2019/11/2
  */
-@RestController("/article/collection")
+@RestController
+@RequestMapping("/article/collection")
 public class ArticleCollectionController {
 
     @Autowired
@@ -54,12 +54,12 @@ public class ArticleCollectionController {
         return articleCollectionVOS;
     }
 
-    @Delete("/deleteById")
+    @DeleteMapping("/deleteById")
     public Result deleteById(@RequestParam("articleCollectionId")Long articleCollectionId){
         return articleCollectionService.deleteArticleCollection(articleCollectionId);
     }
 
-    @Delete("/deleteByIds")
+    @DeleteMapping("/deleteByIds")
     public Result deleteByIds(@RequestParam("articleCollectionIds") List<Long> articleCollectionIds){
         for (Long articleCollectionId : articleCollectionIds) {
             articleCollectionService.deleteArticleCollection(articleCollectionId);

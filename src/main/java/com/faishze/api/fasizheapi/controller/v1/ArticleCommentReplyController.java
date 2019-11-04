@@ -20,7 +20,8 @@ import java.util.List;
  * @contact 15521177704
  * @since 2019/11/1
  */
-@RestController("/article/comment/reply")
+@RestController
+@RequestMapping("/article/comment/reply")
 public class ArticleCommentReplyController {
 
     @Autowired

@@ -24,7 +24,8 @@ import java.util.List;
  * @contact 15521177704
  * @since 2019/10/28
  */
-@RestController("/article")
+@RestController
+@RequestMapping("/article")
 public class ArticleController {
 
     @Autowired

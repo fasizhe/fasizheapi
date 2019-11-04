@@ -5,7 +5,6 @@ import com.faishze.api.fasizheapi.pojo.dto.ArticleCommentLikeDTO;
 import com.faishze.api.fasizheapi.pojo.vo.ArticleCommentLikeVO;
 import com.faishze.api.fasizheapi.result.Result;
 import com.faishze.api.fasizheapi.service.ArticleCommentLikeService;
-import org.apache.ibatis.annotations.Delete;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -20,7 +19,8 @@ import java.util.List;
  * @contact 15521177704
  * @since 2019/11/3
  */
-@RestController("/article/comment/like")
+@RestController
+@RequestMapping("/article/comment/like")
 public class ArticleCommentLikeController {
 
     @Autowired
@@ -39,7 +39,7 @@ public class ArticleCommentLikeController {
         return articleCommentLikeVO;
     }
 
-    @Delete("/delete")
+    @DeleteMapping("/delete")
     public Result delete(@RequestParam("articleCommentLikeId") Long id) {
         return articleCommentLikeService.deleteArticleCommentLikeDTO(id);
     }
