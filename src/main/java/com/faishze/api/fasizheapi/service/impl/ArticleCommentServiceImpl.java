@@ -37,6 +37,8 @@ public class ArticleCommentServiceImpl implements ArticleCommentService {
     @Override
     public Result saveArticleCommentDTO(ArticleCommentDTO record) {
         //做入库前的处理
+        record.setReplyNum(0);
+        record.setLikeNum(0);
         ArticleComment articleComment=dozerMapper.map(record,ArticleComment.class);
         articleCommentMapper.saveArticleComment(articleComment);
         record.setId(articleComment.getId());

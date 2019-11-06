@@ -1,13 +1,17 @@
 package com.faishze.api.fasizheapi.controller.v1;
 
+import com.faishze.api.fasizheapi.constant.HistoryRecordType;
 import com.faishze.api.fasizheapi.pojo.ao.ArticleListAO;
 import com.faishze.api.fasizheapi.pojo.ao.ArticleNewAO;
 import com.faishze.api.fasizheapi.pojo.ao.ArticleOldAO;
+import com.faishze.api.fasizheapi.pojo.do0.Article;
 import com.faishze.api.fasizheapi.pojo.dto.ArticleDTO;
+import com.faishze.api.fasizheapi.pojo.dto.HistoryRecordDTO;
 import com.faishze.api.fasizheapi.pojo.vo.ArticleVO;
 import com.faishze.api.fasizheapi.query.ArticleQuery;
 import com.faishze.api.fasizheapi.result.Result;
 import com.faishze.api.fasizheapi.service.ArticleService;
+import com.faishze.api.fasizheapi.service.HistoryRecordService;
 import com.faishze.api.fasizheapi.service.UserService;
 import com.github.pagehelper.Page;
 import org.dozer.Mapper;
@@ -32,18 +36,29 @@ public class ArticleController {
     ArticleService articleService;
 
     @Autowired
+    HistoryRecordService historyRecordService;
+
+    @Autowired
     UserService userService;
 
     @Autowired
     Mapper dozerMapper;
 
     @GetMapping("/getOneById/{articleId}")
-    public ArticleVO getOneById(@PathVariable("articleId") Integer articleId) {
+    public ArticleVO getOneById(@PathVariable("articleId") Integer articleId, @RequestParam("userId") Integer userId) {
         ArticleVO articleVO;
         ArticleDTO articleDTO = (ArticleDTO) articleService.getArticleDTO(articleId).getData();
         articleVO = dozerMapper.map(articleDTO, ArticleVO.class);
         //文章浏览数+1
         articleService.riseViewNum(articleId);
+        //添加历史记录
+        HistoryRecordDTO<Article> historyRecordDTO = new HistoryRecordDTO();
+        Article article = new Article();
+        article.setId(articleId);
+        historyRecordDTO.setData(article);
+        historyRecordDTO.setType(HistoryRecordType.ARTICLE);
+        historyRecordDTO.setUserId(userId);
+        historyRecordService.saveHistoryRecordDTOAboutArticle(historyRecordDTO);
         return articleVO;
     }
 
@@ -80,7 +95,7 @@ public class ArticleController {
     public ArticleVO update(@RequestBody @Validated ArticleOldAO articleOldAO) {
         //AO转DTO,旧的表单，新的dto
         ArticleDTO articleDTO;
-        articleDTO= (ArticleDTO) articleService.getArticleDTO(articleOldAO.getId()).getData();
+        articleDTO = (ArticleDTO) articleService.getArticleDTO(articleOldAO.getId()).getData();
         articleDTO.setType(articleOldAO.getType());
         articleDTO.setTitle(articleOldAO.getTitle());
         articleDTO.setContent(articleOldAO.getContent());
@@ -91,13 +106,13 @@ public class ArticleController {
     }
 
     @DeleteMapping("/deleteOneById")
-    public Result deleteOneById(@RequestParam("articleId") Integer articleId){
+    public Result deleteOneById(@RequestParam("articleId") Integer articleId) {
         articleService.deleteArticleDTO(articleId);
         return Result.success();
     }
 
     @DeleteMapping("/deleteListByIds")
-    public Result deleteListByIds(@RequestParam("articleIds") List<Integer> articleIds){
+    public Result deleteListByIds(@RequestParam("articleIds") List<Integer> articleIds) {
         for (Integer articleId : articleIds) {
             articleService.deleteArticleDTO(articleId);
         }
@@ -105,13 +120,13 @@ public class ArticleController {
     }
 
     @PutMapping("/banOneById")
-    public Result banOneById(@RequestParam("articleId") Integer articleId){
+    public Result banOneById(@RequestParam("articleId") Integer articleId) {
         articleService.banArticleDTO(articleId);
         return Result.success();
     }
 
     @PutMapping("/banListByIds")
-    public Result banListByIds(@RequestParam("articleIds") List<Integer> articleIds){
+    public Result banListByIds(@RequestParam("articleIds") List<Integer> articleIds) {
         for (Integer articleId : articleIds) {
             articleService.banArticleDTO(articleId);
         }

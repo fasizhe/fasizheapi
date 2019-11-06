@@ -38,7 +38,7 @@ public class ArticleCommentController {
         return articleCommentVO;
     }
 
-    @GetMapping("/getlistByQuery")
+    @PostMapping("/getlistByQuery")
     public List<ArticleCommentVO> getlistByArticleIdAndQuery(@RequestBody @Validated ArticleCommentListAO articleCommentListAO) {
         List<ArticleCommentVO> articleCommentVOList = new ArrayList<>();
         //按条件分页返回文章所有评论
@@ -58,7 +58,7 @@ public class ArticleCommentController {
         return articleCommentVOList;
     }
 
-    @PutMapping("/save")
+    @PostMapping("/save")
     public ArticleCommentVO save(@RequestBody @Validated ArticleCommentAO articleCommentAO) {
         ArticleCommentDTO articleCommentDTO = dozerMapper.map(articleCommentAO, ArticleCommentDTO.class);
         articleCommentDTO =

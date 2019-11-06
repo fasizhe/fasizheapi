@@ -2,9 +2,11 @@ package com.faishze.api.fasizheapi.pojo.do0;
 
 import com.faishze.api.fasizheapi.constant.ArticleType;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Article {
+public class Article implements Serializable {
+    private static final long serialVersionUID = 3763802008738277686L;
     private Integer id;
 
     private Integer userId;

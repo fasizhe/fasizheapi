@@ -12,8 +12,11 @@
 
   <resultMap id="HistoryRecordAboutArticleMap"
              type="com.faishze.api.fasizheapi.pojo.do0.entity.HistoryRecordAboutArticleEntity">
-    <result column="firstTime" jdbcType="TIMESTAMP" property="firstTime" />
-    <result column="lastTime" jdbcType="TIMESTAMP" property="lastTime" />
+    <id column="hid" jdbcType="BIGINT" property="id"/>
+    <result column="huser_id" jdbcType="INTEGER" property="userId"/>
+    <result column="htype" jdbcType="INTEGER" property="type"/>
+    <result column="firstTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="lastTime" jdbcType="TIMESTAMP" property="updateTime" />
     <association property="article" javaType="com.faishze.api.fasizheapi.pojo.do0.Article">
       <id column="id" jdbcType="INTEGER" property="id" />
       <result column="user_id" jdbcType="INTEGER" property="userId" />
@@ -37,18 +40,15 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_history_record (user_id, `type`, type_id, 
-      create_time, update_time)
-    values (#{userId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{typeId,jdbcType=BIGINT},
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into t_history_record (user_id, `type`, type_id
+      )
+    values (#{userId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{typeId,jdbcType=BIGINT})
   </insert>
   <update id="updateHistoryRecord" parameterType="com.faishze.api.fasizheapi.pojo.do0.HistoryRecord">
     update t_history_record
     set user_id = #{userId,jdbcType=INTEGER},
       `type` = #{type,jdbcType=INTEGER},
-      type_id = #{typeId,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      type_id = #{typeId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="getHistoryRecord" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -62,7 +62,10 @@
   </select>
   <select id="listHistoryRecordAboutArticleEntitysByUserId"
           resultMap="HistoryRecordAboutArticleMap">
-    select thr.create_time as firstTime, thr.update_time as lastTime, ta.id, ta.user_id, title, ta.`type`,
+    select thr.id as hid, thr.user_id as huser_id, thr.`type` as htype,
+     thr.create_time as firstTime, thr.update_time as
+    lastTime, ta.id,
+    ta.user_id, title, ta.`type`,
       like_num,collection_num, view_num, comment_num,
       available, ta.create_time, ta.update_time, content
     from t_history_record as thr , t_article as ta

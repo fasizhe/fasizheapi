@@ -1,27 +1,26 @@
-package com.faishze.api.fasizheapi.pojo.do0.entity;
+package com.faishze.api.fasizheapi.pojo.dto;
 
 import com.faishze.api.fasizheapi.constant.HistoryRecordType;
-import com.faishze.api.fasizheapi.pojo.do0.Article;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author 杜科
- * @description 关于文章的历史记录
+ * @description
  * @contact 15521177704
- * @since 2019/10/27
+ * @since 2019/11/5
  */
-public class HistoryRecordAboutArticleEntity implements Serializable {
+public class HistoryRecordDTO<T> implements Serializable {
 
-    private static final long serialVersionUID = 1792919453873866506L;
+    private static final long serialVersionUID = -6048093189339242778L;
     private Long id;
 
     private Integer userId;
 
     private HistoryRecordType type;
 
-    private Article article;
+    private T data;
 
     //首次浏览
     private Date createTime;
@@ -53,12 +52,12 @@ public class HistoryRecordAboutArticleEntity implements Serializable {
         this.type = type;
     }
 
-    public Article getArticle() {
-        return article;
+    public T getData() {
+        return data;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setData(T data) {
+        this.data = data;
     }
 
     public Date getCreateTime() {
@@ -79,11 +78,11 @@ public class HistoryRecordAboutArticleEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "HistoryRecordAboutArticleEntity{" +
+        return "HistoryRecordDTO{" +
                 "id=" + id +
                 ", userId=" + userId +
                 ", type=" + type +
-                ", article=" + article +
+                ", data=" + data +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';

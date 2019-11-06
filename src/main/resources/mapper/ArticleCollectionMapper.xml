@@ -12,6 +12,7 @@
     <resultMap id="ArticleCollectionEntityMap"
                type="com.faishze.api.fasizheapi.pojo.do0.entity.AritcleCollectionEntity">
         <id column="cid" jdbcType="INTEGER" property="id" />
+        <result column="cuserid" jdbcType="INTEGER" property="userId"/>
         <result column="collected_time" jdbcType="TIMESTAMP" property="collectedTime" />
         <association property="article" javaType="com.faishze.api.fasizheapi.pojo.do0.Article">
             <id column="id" jdbcType="INTEGER" property="id" />
@@ -59,7 +60,8 @@
     <select id="listArticleCollectionEntitysByCollectorId" parameterType="java.lang.Integer"
             resultMap="ArticleCollectionEntityMap">
 --         解决重名
-      select t_article_collection.id as cid, t_article_collection.create_time as collected_time, t_article.id,
+      select t_article_collection.id as cid, t_article_collection.user_id as cuserid,
+      t_article_collection.create_time as collected_time, t_article.id,
       t_article.user_id, title, `type`,
       like_num,
       collection_num, view_num, comment_num,

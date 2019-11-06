@@ -2,6 +2,7 @@ package com.faishze.api.fasizheapi.controller.v1;
 
 import com.faishze.api.fasizheapi.pojo.ao.ArticleCollectionAO;
 import com.faishze.api.fasizheapi.pojo.ao.ArticleCollectionListAO;
+import com.faishze.api.fasizheapi.pojo.do0.Article;
 import com.faishze.api.fasizheapi.pojo.dto.ArticleCollectionDTO;
 import com.faishze.api.fasizheapi.pojo.vo.ArticleCollectionVO;
 import com.faishze.api.fasizheapi.result.Result;
@@ -33,13 +34,16 @@ public class ArticleCollectionController {
     @PostMapping("/save")
     public ArticleCollectionVO save(@RequestBody @Validated ArticleCollectionAO articleCollectionAO) {
         ArticleCollectionDTO articleCollectionDTO = dozerMapper.map(articleCollectionAO, ArticleCollectionDTO.class);
+        Article article=new Article();
+        article.setId(articleCollectionAO.getArticleId());
+        articleCollectionDTO.setArticle(article);
         articleCollectionDTO =
                 (ArticleCollectionDTO) articleCollectionService.saveArticleCollectionDTO(articleCollectionDTO).getData();
         ArticleCollectionVO articleCollectionVO = dozerMapper.map(articleCollectionDTO, ArticleCollectionVO.class);
         return articleCollectionVO;
     }
 
-    @GetMapping("/getListByUserId")
+    @PostMapping("/getListByUserId")
     public List<ArticleCollectionVO> getListByUserId(@RequestBody @Validated ArticleCollectionListAO articleCollectionListAO) {
         List<ArticleCollectionVO> articleCollectionVOS = new ArrayList<>();
         ArticleCollectionVO articleCollectionVO;

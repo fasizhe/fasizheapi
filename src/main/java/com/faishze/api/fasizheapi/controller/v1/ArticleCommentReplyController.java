@@ -58,7 +58,7 @@ public class ArticleCommentReplyController {
         return articleCommentReplyVOList;
     }
 
-    @PutMapping("/save")
+    @PostMapping("/save")
     public ArticleCommentReplyVO save(@RequestBody @Validated ArticleCommentReplyAO articleCommentReplyAO) {
         ArticleCommentReplyDTO articleCommentReplyDTO = dozerMapper.map(articleCommentReplyAO, ArticleCommentReplyDTO.class);
         articleCommentReplyDTO =

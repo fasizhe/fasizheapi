@@ -44,7 +44,7 @@ public class ArticleLikeController {
         return articleLikeService.deleteArticleLikeDTO(id);
     }
 
-    @GetMapping("/getListByQuery")
+    @PostMapping("/getListByQuery")
     public List<ArticleLikeVO> getListByQuery(@RequestParam("articleLikeAOs") List<ArticleLikeAO> articleLikeAOS) {
         List<ArticleLikeVO> articleLikeVOS = new ArrayList<>();
         ArticleLikeVO articleLikeVO;

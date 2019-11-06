@@ -2,9 +2,11 @@ package com.faishze.api.fasizheapi.pojo.do0;
 
 import com.faishze.api.fasizheapi.constant.HistoryRecordType;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class HistoryRecord {
+public class HistoryRecord implements Serializable {
+    private static final long serialVersionUID = -8006302148935465435L;
     private Long id;
 
     private Integer userId;
