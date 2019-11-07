@@ -3,9 +3,11 @@ package com.faishze.api.fasizheapi.dao;
 import com.faishze.api.fasizheapi.pojo.do0.entity.AritcleCollectionEntity;
 import com.faishze.api.fasizheapi.pojo.do0.ArticleCollection;
 import com.github.pagehelper.Page;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface ArticleCollectionMapper {
     int deleteArticleCollection(Long id);
 

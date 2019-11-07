@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * TODO 完善PermissionServiceImpl
  * @author masonluo
  * @date 2019/10/23 11:48 PM
  */
@@ -29,6 +30,11 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public List<String> listPermissionNameByRoleName(String RoleName) {
+        return null;
+    }
+
+    @Override
+    public List<String> getPermissionByRoleName(String roleString) {
         return null;
     }
 }

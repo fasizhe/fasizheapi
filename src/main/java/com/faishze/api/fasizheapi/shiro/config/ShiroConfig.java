@@ -1,86 +1,133 @@
 package com.faishze.api.fasizheapi.shiro.config;
 
-import com.faishze.api.fasizheapi.shiro.filter.JwtFilter;
+import com.faishze.api.fasizheapi.shiro.filter.JwtAuthFilter;
+import com.faishze.api.fasizheapi.shiro.filter.RestPermissiveFilter;
 import com.faishze.api.fasizheapi.shiro.realm.JwtRealm;
-import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
+import com.faishze.api.fasizheapi.shiro.realm.UserRealm;
+import com.faishze.api.fasizheapi.shiro.resolver.MyRolePermissionResolver;
+import org.apache.shiro.authc.Authenticator;
+import org.apache.shiro.authc.pam.FirstSuccessfulStrategy;
+import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
+import org.apache.shiro.authz.Authorizer;
+import org.apache.shiro.authz.ModularRealmAuthorizer;
+import org.apache.shiro.authz.permission.RolePermissionResolver;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
-import org.apache.shiro.spring.LifecycleBeanPostProcessor;
-import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.mgt.SessionStorageEvaluator;
+import org.apache.shiro.mgt.SubjectDAO;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
+import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.apache.shiro.web.mgt.DefaultWebSessionStorageEvaluator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author masonluo
- * @date 2019/10/23 11:10 PM
+ * @date 2019/11/3 11:55 AM
  */
-
 @Configuration
 public class ShiroConfig {
 
-    @Bean("securityManager")
-    public DefaultWebSecurityManager getManager(JwtRealm realm){
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        // 使用自己的realm
-        securityManager.setRealm(realm);
-        // 关闭shiro自带的session
-        DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
-        DefaultSessionStorageEvaluator evaluator = new DefaultSessionStorageEvaluator();
+    /**
+     * 角色权限处理器
+     * 解析出角色的权限
+     */
+    @Bean("rolePermissionResolver")
+    public RolePermissionResolver createRolePermissionResolver() {
+        return new MyRolePermissionResolver();
+    }
+
+    /**
+     * 禁用session，但是还是需要配合noSessionFilter使用
+     */
+    @Bean
+    protected SessionStorageEvaluator sessionStorageEvaluator() {
+        DefaultWebSessionStorageEvaluator evaluator = new DefaultWebSessionStorageEvaluator();
         evaluator.setSessionStorageEnabled(false);
-        subjectDAO.setSessionStorageEvaluator(evaluator);
-        securityManager.setSubjectDAO(subjectDAO);
+        return evaluator;
+    }
+
+    /**
+     * 验证者
+     */
+    @Bean
+    public Authenticator authenticator() {
+        ModularRealmAuthenticator modularRealmAuthenticator = new ModularRealmAuthenticator();
+        modularRealmAuthenticator.setAuthenticationStrategy(new FirstSuccessfulStrategy());
+        return modularRealmAuthenticator;
+    }
+
+    /**
+     * 权限验证
+     *
+     * @param rolePermissionResolver 用户权限解析器
+     */
+    @Bean
+    public Authorizer authorizer(RolePermissionResolver rolePermissionResolver) {
+        ModularRealmAuthorizer authorizer = new ModularRealmAuthorizer();
+        authorizer.setRolePermissionResolver(rolePermissionResolver);
+        return authorizer;
+    }
+
+    @Bean
+    public UserRealm userRealm(){
+        return new UserRealm();
+    }
+
+    @Bean
+    public JwtRealm jwtRealm(){
+        return new JwtRealm();
+    }
+
+    @Bean("securityManager")
+    public SecurityManager securityManager(SessionStorageEvaluator evaluator,
+                                           Authenticator authenticator,
+                                           Authorizer authorizer,
+                                           UserRealm userRealm,
+                                           JwtRealm jwtRealm) {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        SubjectDAO subjectDAO = new DefaultSubjectDAO();
+        ((DefaultSubjectDAO) subjectDAO).setSessionStorageEvaluator(evaluator);
+        securityManager.setAuthenticator(authenticator);
+        securityManager.setAuthorizer(authorizer);
+        securityManager.setRealms(Arrays.asList(userRealm, jwtRealm));
         return securityManager;
     }
 
     @Bean("shiroFilter")
-    public ShiroFilterFactoryBean factory(DefaultWebSecurityManager securityManager){
-        ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
-        // 添加自己过滤器
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager){
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
         Map<String, Filter> filterMap = new HashMap<>();
-        // TODO 打开验证
-//        filterMap.put("JwtFilter", new JwtFilter());
-        factoryBean.setFilters(filterMap);
-
-        factoryBean.setSecurityManager(securityManager);
-        /**
-         * 自定义url规则，前期先手动定义，后期根据数据库进行导入
-         */
-        Map<String, String> filterRuleMap = new HashMap<>();
-        // TODO 后期删掉这条语句
-        filterRuleMap.put("/**", "anon");
-        filterRuleMap.put("/**/login*/**", "anon");
-        filterRuleMap.put("/**/register*/**", "anon");
-        filterRuleMap.put("/**/user", "anon");
-        factoryBean.setFilterChainDefinitionMap(filterRuleMap);
-        return factoryBean;
+        filterMap.put("restPermissive", restPermissiveFilter());
+        filterMap.put("authcToken", jwtAuthFilter());
+        shiroFilterFactoryBean.setFilters(filterMap);
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(shiroFilterChainDefinition().getFilterChainMap());
+        return shiroFilterFactoryBean;
     }
 
     @Bean
-    @DependsOn("lifecycleBeanPostProcessor")
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
-        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new
-                DefaultAdvisorAutoProxyCreator();
-        // 使用cglib
-        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
-        return defaultAdvisorAutoProxyCreator;
+    protected ShiroFilterChainDefinition shiroFilterChainDefinition(){
+        DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
+        chainDefinition.addPathDefinition("/token", "noSessionCreation, anon");
+        chainDefinition.addPathDefinition("/article", "noSessionCreation, authcToken[permissive],restPermissive[article, permissive:article:get, permissive:article:add]");
+        chainDefinition.addPathDefinition("/user", "noSessionCreation, authcToken[permissive], restPermissive[user, permissive:user:add]");
+        chainDefinition.addPathDefinition("/admin", "noSessionCreation, authcToken, restPermissive[admin]");
+        return chainDefinition;
     }
 
-    @Bean
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
-        return new LifecycleBeanPostProcessor();
+    private RestPermissiveFilter restPermissiveFilter(){
+        return new RestPermissiveFilter();
     }
 
-    @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager manager){
-        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
-        advisor.setSecurityManager(manager);
-        return advisor;
+    private JwtAuthFilter jwtAuthFilter(){
+        return new JwtAuthFilter();
     }
 }

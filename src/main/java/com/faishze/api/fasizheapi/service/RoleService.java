@@ -3,6 +3,7 @@ package com.faishze.api.fasizheapi.service;
 import com.faishze.api.fasizheapi.pojo.do0.Role;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author masonluo
@@ -22,5 +23,5 @@ public interface RoleService {
      * @param username
      * @return
      */
-    List<String> listRoleNamesByUsername(String username);
+    Set<String> listRoleNamesByUsername(String username);
 }

@@ -4,6 +4,7 @@ import com.faishze.api.fasizheapi.pojo.do0.Role;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface RoleMapper {
@@ -29,5 +30,5 @@ public interface RoleMapper {
      * @param username 用户名
      * @return 角色名称列表
      */
-    List<String> listRoleNamesByUsername(String username);
+    Set<String> listRoleNamesByUsername(String username);
 }

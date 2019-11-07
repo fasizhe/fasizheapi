@@ -16,7 +16,7 @@ public final class FileConstant {
      */
     public final static String BUF_PATH;
     static {
-        BUF_PATH = PropertiesUtils.getProperty("ftp.buf.path", "application.properties");
+        BUF_PATH = PropertiesUtils.getProperty("ftp.buf.path", "application-dev.properties");
     }
 
     /**
@@ -24,7 +24,7 @@ public final class FileConstant {
      */
     public final static String HOST;
     static {
-        HOST = PropertiesUtils.getProperty("ftp.prefix.host", "application.properties");
+        HOST = PropertiesUtils.getProperty("ftp.prefix.host", "application-dev.properties");
     }
 
     /**
@@ -32,6 +32,6 @@ public final class FileConstant {
      */
     public final static String AVATAR_PATH;
     static {
-        AVATAR_PATH = "avatar";
+        AVATAR_PATH = PropertiesUtils.getProperty("ftp.location.avatar", "application-dev.properties");
     }
 }

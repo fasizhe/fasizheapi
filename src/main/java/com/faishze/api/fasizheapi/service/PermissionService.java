@@ -36,4 +36,7 @@ public interface PermissionService {
      * @return 权限名列表
      */
     List<String> listPermissionNameByRoleName(String RoleName);
+
+    // TODO
+    List<String> getPermissionByRoleName(String roleString);
 }

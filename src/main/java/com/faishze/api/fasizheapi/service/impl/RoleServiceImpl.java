@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author masonluo
@@ -28,7 +29,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<String> listRoleNamesByUsername(String username) {
+    public Set<String> listRoleNamesByUsername(String username) {
         return roleMapper.listRoleNamesByUsername(username);
     }
 }

@@ -5,6 +5,9 @@ import org.apache.ibatis.type.Alias;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 添加了salt - masonluo
+ */
 @Alias("user")
 public class User implements Serializable {
     private Integer id;
@@ -12,6 +15,8 @@ public class User implements Serializable {
     private String username;
 
     private String password;
+
+    private String salt;
 
     private Boolean status;
 
@@ -77,6 +82,14 @@ public class User implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     @Override

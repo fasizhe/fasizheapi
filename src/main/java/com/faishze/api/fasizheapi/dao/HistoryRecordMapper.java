@@ -4,8 +4,9 @@ import com.faishze.api.fasizheapi.pojo.do0.HistoryRecord;
 import com.faishze.api.fasizheapi.pojo.do0.entity.HistoryRecordAboutArticleEntity;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
-@Mapper
+@Repository
 public interface HistoryRecordMapper {
     int deleteHistoryRecord(Long id);
 
