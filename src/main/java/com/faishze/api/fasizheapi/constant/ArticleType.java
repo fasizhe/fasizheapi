@@ -1,8 +1,8 @@
 package com.faishze.api.fasizheapi.constant;
 
 public enum ArticleType{
-    UGC(0,"用户原创内容"),
-    NEWS(1,"新闻资讯");
+    UGC(0,"UGC"),
+    NEWS(1,"NEWS");
 
     private final int id;
     private final String name;
@@ -23,7 +23,7 @@ public enum ArticleType{
 
     public static ArticleType getArticleTypeByName(String name) {
         for (ArticleType articleType : ArticleType.values()) {
-            if (articleType.getName() == name) {
+            if (articleType.getName().equals(name)) {
                 return articleType;
             }
         }

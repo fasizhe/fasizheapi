@@ -53,7 +53,9 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="listArticles" resultMap="BaseResultMap">
-
+    select id, user_id, user_nick_name, title, `type`, like_num, collection_num, view_num, comment_num,
+    available, create_time, update_time, content
+    from t_article
   </select>
   <select id="listArticlesByQuery" parameterType="com.faishze.api.fasizheapi.query.ArticleQuery" resultMap="BaseResultMap">
     select id, user_id, user_nick_name, title, `type`, like_num, collection_num, view_num, comment_num,

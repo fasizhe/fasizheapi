@@ -58,6 +58,28 @@ public class ArticleCollectionController {
         return articleCollectionVOS;
     }
 
+    @PostMapping("/getListByQuery")
+    public List<ArticleCollectionVO> getListByQuery(@RequestBody List<ArticleCollectionAO> articleCollectionAOS) {
+        List<ArticleCollectionVO> articleCollectionVOS = new ArrayList<>();
+        ArticleCollectionVO articleCollectionVO;
+        ArticleCollectionDTO articleCollectionDTO;
+        Result result;
+        for (ArticleCollectionAO articleCollectionAO : articleCollectionAOS) {
+            //articleCollectionDTO=dozerMapper.map(articleCollectionAO,ArticleCollectionDTO.class);
+            result=articleCollectionService.getArticleCollectionDTOsByUserIdAndArticleId(articleCollectionAO.getUserId(),
+                    articleCollectionAO.getArticleId());
+            if (result.isSuccess()){
+                articleCollectionDTO= (ArticleCollectionDTO) result.getData();
+            }else{
+                articleCollectionDTO=new ArticleCollectionDTO();
+                articleCollectionDTO.setId((long) -1);
+            }
+            articleCollectionVO=dozerMapper.map(articleCollectionDTO,ArticleCollectionVO.class);
+            articleCollectionVOS.add(articleCollectionVO);
+        }
+        return articleCollectionVOS;
+    }
+
     @DeleteMapping("/deleteById")
     public Result deleteById(@RequestParam("articleCollectionId")Long articleCollectionId){
         return articleCollectionService.deleteArticleCollection(articleCollectionId);

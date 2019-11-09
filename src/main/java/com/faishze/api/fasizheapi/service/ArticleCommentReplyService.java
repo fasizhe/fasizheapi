@@ -25,4 +25,8 @@ public interface ArticleCommentReplyService {
 
     //删除回复
     Result clearArticleCommentReplyDTO(Long id);
+
+    Result riseLikeNum(Long id);
+
+    Result reduceLikeNum(Long id);
 }

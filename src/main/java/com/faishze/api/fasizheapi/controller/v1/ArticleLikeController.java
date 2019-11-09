@@ -45,7 +45,7 @@ public class ArticleLikeController {
     }
 
     @PostMapping("/getListByQuery")
-    public List<ArticleLikeVO> getListByQuery(@RequestParam("articleLikeAOs") List<ArticleLikeAO> articleLikeAOS) {
+    public List<ArticleLikeVO> getListByQuery(@RequestBody List<ArticleLikeAO> articleLikeAOS) {
         List<ArticleLikeVO> articleLikeVOS = new ArrayList<>();
         ArticleLikeVO articleLikeVO;
         ArticleLikeDTO articleLikeDTO;

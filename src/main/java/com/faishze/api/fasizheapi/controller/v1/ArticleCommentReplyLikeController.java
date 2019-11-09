@@ -45,7 +45,7 @@ public class ArticleCommentReplyLikeController {
     }
 
     @GetMapping("/getListByQuery")
-    public List<ArticleCommentReplyLikeVO> getListByQuery(@RequestParam("articleCommentReplyLikeAOs") List<ArticleCommentReplyLikeAO> articleCommentReplyLikeAOS) {
+    public List<ArticleCommentReplyLikeVO> getListByQuery(@RequestBody List<ArticleCommentReplyLikeAO> articleCommentReplyLikeAOS) {
         List<ArticleCommentReplyLikeVO> articleCommentReplyLikeVOS = new ArrayList<>();
         ArticleCommentReplyLikeVO articleCommentReplyLikeVO;
         ArticleCommentReplyLikeDTO articleCommentReplyLikeDTO;

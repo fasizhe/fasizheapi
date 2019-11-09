@@ -13,5 +13,6 @@ public interface ArticleLikeService {
 
     Result deleteArticleLikeDTO(Long Id);
 
+    //用于判断该用户是否点赞过该文章
     Result getArticleLikeDTOsByUserIdAndArticleId(Integer userId, Integer articleId);
 }

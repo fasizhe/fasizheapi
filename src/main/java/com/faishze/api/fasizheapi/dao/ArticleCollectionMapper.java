@@ -19,4 +19,6 @@ public interface ArticleCollectionMapper {
 
     //返回收藏者收藏的文章，id降序即收藏时间降序，由新到旧
     Page<AritcleCollectionEntity> listArticleCollectionEntitysByCollectorId(Integer userId);
+
+    Page<ArticleCollection> listArticleCollectionsByCollectorId(Integer userId);
 }

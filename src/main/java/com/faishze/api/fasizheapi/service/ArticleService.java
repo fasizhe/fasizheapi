@@ -1,7 +1,7 @@
 package com.faishze.api.fasizheapi.service;
 
-import com.faishze.api.fasizheapi.query.ArticleQuery;
 import com.faishze.api.fasizheapi.pojo.dto.ArticleDTO;
+import com.faishze.api.fasizheapi.query.ArticleQuery;
 import com.faishze.api.fasizheapi.result.Result;
 
 /**
@@ -45,5 +45,20 @@ public interface ArticleService {
 
     //增加文章浏览数
     Result riseViewNum(Integer id);
+
+    //增加文章点赞数
+    Result riseLikeNum(Integer id);
+
+    //减少文章点赞数
+    Result reduceLikeNum(Integer id);
+
+    //增加文章评论数
+    Result riseCommentNum(Integer id);
+
+    //增加文章收藏数
+    Result riseCollectionNum(Integer id);
+
+    //减少文章收藏数
+    Result reduceCollectionNum(Integer id);
 
 }

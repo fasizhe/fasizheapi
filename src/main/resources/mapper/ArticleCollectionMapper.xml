@@ -70,4 +70,10 @@
     where t_article_collection.user_id = #{userId} and t_article_collection.article_id = t_article.id
     order by t_article_collection.id DESC
     </select>
+    <select id="listArticleCollectionsByCollectorId"
+            resultMap="BaseResultMap">
+    select id, user_id, article_id, create_time
+    from t_article_collection
+    where user_id = #{userId}
+    </select>
 </mapper>

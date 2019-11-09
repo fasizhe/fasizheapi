@@ -1,44 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.faishze.api.fasizheapi.dao.ArticleLikeMapper">
-  <resultMap id="BaseResultMap" type="com.faishze.api.fasizheapi.pojo.do0.ArticleLike">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="article_id" jdbcType="INTEGER" property="articleId" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-  </resultMap>
-  <delete id="deleteArticleLike" parameterType="java.lang.Long">
+    <resultMap id="BaseResultMap" type="com.faishze.api.fasizheapi.pojo.do0.ArticleLike">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="article_id" jdbcType="INTEGER" property="articleId"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <delete id="deleteArticleLike" parameterType="java.lang.Long">
     delete from t_article_like
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="saveArticleLike" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleLike">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_article_like (article_id, user_id
-      )
-    values (#{articleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}
-      )
-  </insert>
-  <update id="updateArticleLike" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleLike">
+    <insert id="saveArticleLike" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleLike">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_article_like (article_id, user_id
+        )
+        values (#{articleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}
+        )
+    </insert>
+    <update id="updateArticleLike" parameterType="com.faishze.api.fasizheapi.pojo.do0.ArticleLike">
     update t_article_like
     set article_id = #{articleId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="getArticleLike" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="getArticleLike" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select id, article_id, user_id, create_time
     from t_article_like
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="listArticleLikes" resultMap="BaseResultMap">
+    <select id="listArticleLikes" resultMap="BaseResultMap">
     select id, article_id, user_id, create_time
     from t_article_like
   </select>
     <select id="getArticleLikeByUserIdAndArticleId"
-            resultType="com.faishze.api.fasizheapi.pojo.do0.ArticleLike">
+            resultMap="BaseResultMap">
     select id, article_id, user_id, create_time
     from t_article_like as t
-    where t.article_id = #{articleId} and t.user_id = #{userId} limit 1
+    where t.article_id = #{articleId,jdbcType=BIGINT} and t.user_id = #{userId,jdbcType=TIMESTAMP} limit 1
+    </select>
+    <select id="listArticleLikesByArticleIdAndDeadTime"
+            resultMap="BaseResultMap">
+      select id, article_id, user_id, create_time
+      from t_article_like as t
+      where t.article_id = #{articleId} and t.create_time >#{deadTime}
     </select>
 </mapper>

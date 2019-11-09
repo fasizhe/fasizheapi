@@ -1,16 +1,18 @@
 package com.faishze.api.fasizheapi.service.impl;
 
 import com.faishze.api.fasizheapi.dao.ArticleMapper;
-import com.faishze.api.fasizheapi.query.ArticleQuery;
 import com.faishze.api.fasizheapi.pojo.do0.Article;
 import com.faishze.api.fasizheapi.pojo.dto.ArticleDTO;
+import com.faishze.api.fasizheapi.query.ArticleQuery;
 import com.faishze.api.fasizheapi.result.Result;
 import com.faishze.api.fasizheapi.service.ArticleService;
 import com.faishze.api.fasizheapi.service.UserService;
+import com.faishze.api.fasizheapi.util.JedisUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,11 +35,16 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     UserService userService;
 
+    @Value("${redis.article.key}")
+    String articleKey;
+
+    @Value("${redis.articlesScoreInId.key}")
+    String articlesScoreInIdKey;
+
     @Override
     public Result saveArticleDTO(ArticleDTO articleDTO) {
         //前期设定
         articleDTO.setAvailable(true);
-
         articleDTO.setViewNum((long) 0);
         articleDTO.setLikeNum(0);
         articleDTO.setCommentNum(0);
@@ -45,6 +52,11 @@ public class ArticleServiceImpl implements ArticleService {
         Article article;
         article=dozerMapper.map(articleDTO,Article.class);
         articleMapper.saveArticle(article);
+        //更新缓存
+        JedisUtil.zsetMember(articlesScoreInIdKey,article.getId().doubleValue(),article.getId());
+        //永不过期
+        JedisUtil.setExpire(articleKey,-1);
+
         articleDTO.setId(article.getId());
         Result result=Result.success(articleDTO);
         return result;
@@ -57,9 +69,23 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Result getArticleDTO(Integer id) {
+    public Result getArticleDTO(Integer id){
         ArticleDTO articleDTO;
-        Article article=articleMapper.getArticle(id);
+        Article article=new Article();
+        articleKey=articleKey+id;
+        //检查缓存
+        if(JedisUtil.isExist(articleKey)){
+            article= (Article) JedisUtil.getObject(articleKey,article);
+            //文章缓存重置为24小时
+            JedisUtil.setExpire(articleKey,60*60*24);
+            System.out.println("读取文章缓存");
+        }else{
+            article=articleMapper.getArticle(id);
+            JedisUtil.setObject(articleKey,article);
+            //文章缓存重置为24小时
+            JedisUtil.setExpire(articleKey,60*60*24);
+            System.out.println("读取数据库，并写到文章缓存");
+        }
         //DO转DTO
         articleDTO=dozerMapper.map(article,ArticleDTO.class);
         Result result=Result.success(articleDTO);
@@ -68,9 +94,15 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Result updateArticleDTO(ArticleDTO articleDTO) {
-        Article article;
-        article=dozerMapper.map(articleDTO,Article.class);
-        articleMapper.updateArticle(article);
+        Integer articleId=articleDTO.getId();
+        articleKey=articleKey+articleId;
+        Article article=dozerMapper.map(articleDTO,Article.class);
+        JedisUtil.setObject(articleKey,article);
+        //文章缓存重置为24小时
+        JedisUtil.setExpire(articleKey,60*60*24);
+        System.out.println("更新文章缓存");
+        //写回数据库,用定时任务写回
+        //articleMapper.updateArticle(article);
         Result result=Result.success(articleDTO);
         return result ;
     }
@@ -109,11 +141,52 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Result riseViewNum(Integer id){
-        Article article=articleMapper.getArticle(id);
-        article.setViewNum(article.getViewNum()+1);
-        articleMapper.updateArticle(article);
+        ArticleDTO articleDTO= (ArticleDTO) getArticleDTO(id).getData();
+        articleDTO.setViewNum(articleDTO.getViewNum()+1);
+        updateArticleDTO(articleDTO);
         return Result.success();
     }
+
+    @Override
+    public Result riseLikeNum(Integer id) {
+        ArticleDTO articleDTO= (ArticleDTO) getArticleDTO(id).getData();
+        articleDTO.setLikeNum(articleDTO.getLikeNum()+1);
+        updateArticleDTO(articleDTO);
+        return Result.success();
+    }
+
+    @Override
+    public Result reduceLikeNum(Integer id) {
+        ArticleDTO articleDTO= (ArticleDTO) getArticleDTO(id).getData();
+        articleDTO.setLikeNum(articleDTO.getLikeNum()-1);
+        updateArticleDTO(articleDTO);
+        return Result.success();
+    }
+
+    @Override
+    public Result riseCommentNum(Integer id) {
+        ArticleDTO articleDTO= (ArticleDTO) getArticleDTO(id).getData();
+        articleDTO.setCommentNum(articleDTO.getCommentNum()+1);
+        updateArticleDTO(articleDTO);
+        return Result.success();
+    }
+
+    @Override
+    public Result riseCollectionNum(Integer id) {
+        ArticleDTO articleDTO= (ArticleDTO) getArticleDTO(id).getData();
+        articleDTO.setCollectionNum(articleDTO.getCollectionNum()+1);
+        updateArticleDTO(articleDTO);
+        return Result.success();
+    }
+
+    @Override
+    public Result reduceCollectionNum(Integer id) {
+        ArticleDTO articleDTO= (ArticleDTO) getArticleDTO(id).getData();
+        articleDTO.setCollectionNum(articleDTO.getCollectionNum()-1);
+        updateArticleDTO(articleDTO);
+        return Result.success();
+    }
+
 
 //    public Page<ArticleDTO> listArticleDTOsByAvailableOderByLikeNumDESC(Integer pageNum, Integer pageSize){
 //        ArticleQuery articleQuery=new ArticleQuery(true,null,null,null,ArticleQuery.LIKE_NUM,ArticleQuery.DESC);

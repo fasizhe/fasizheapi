@@ -5,8 +5,7 @@ import com.faishze.api.fasizheapi.constant.ArticleType;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Article implements Serializable {
-    private static final long serialVersionUID = 3763802008738277686L;
+public class Article{
     private Integer id;
 
     private Integer userId;

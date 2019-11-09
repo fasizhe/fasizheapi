@@ -47,10 +47,11 @@ public class ArticleController {
     @GetMapping("/getOneById/{articleId}")
     public ArticleVO getOneById(@PathVariable("articleId") Integer articleId, @RequestParam("userId") Integer userId) {
         ArticleVO articleVO;
-        ArticleDTO articleDTO = (ArticleDTO) articleService.getArticleDTO(articleId).getData();
-        articleVO = dozerMapper.map(articleDTO, ArticleVO.class);
         //文章浏览数+1
         articleService.riseViewNum(articleId);
+        ArticleDTO articleDTO = (ArticleDTO) articleService.getArticleDTO(articleId).getData();
+        articleVO = dozerMapper.map(articleDTO, ArticleVO.class);
+
         //添加历史记录
         HistoryRecordDTO<Article> historyRecordDTO = new HistoryRecordDTO();
         Article article = new Article();
@@ -59,6 +60,7 @@ public class ArticleController {
         historyRecordDTO.setType(HistoryRecordType.ARTICLE);
         historyRecordDTO.setUserId(userId);
         historyRecordService.saveHistoryRecordDTOAboutArticle(historyRecordDTO);
+
         return articleVO;
     }
 

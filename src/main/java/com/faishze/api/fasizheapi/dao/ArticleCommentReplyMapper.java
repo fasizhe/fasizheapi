@@ -18,4 +18,6 @@ public interface ArticleCommentReplyMapper {
     int updateArticleCommentReply(ArticleCommentReply record);
 
     Page<ArticleCommentReply> listArticleCommentReplysByQuery(ArticleCommentReplyQuery articleCommentReplyQuery);
+
+
 }

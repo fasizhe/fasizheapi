@@ -27,4 +27,11 @@ public interface ArticleCommentService {
 
     //删除评论
     Result clearArticleCommentDTO(Long id);
+
+    Result riseLikeNum(Long commentId);
+
+    Result reduceLikeNum(Long commentId);
+
+    Result riseRplyNum(Long commentId);
+
 }

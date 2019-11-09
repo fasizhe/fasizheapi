@@ -45,7 +45,7 @@ public class ArticleCommentLikeController {
     }
 
     @PostMapping("/getListByQuery")
-    public List<ArticleCommentLikeVO> getListByQuery(@RequestParam("articleCommentLikeAOs") List<ArticleCommentLikeAO> articleCommentLikeAOS) {
+    public List<ArticleCommentLikeVO> getListByQuery(@RequestBody List<ArticleCommentLikeAO> articleCommentLikeAOS) {
         List<ArticleCommentLikeVO> articleCommentLikeVOS = new ArrayList<>();
         ArticleCommentLikeVO articleCommentLikeVO;
         ArticleCommentLikeDTO articleCommentLikeDTO;

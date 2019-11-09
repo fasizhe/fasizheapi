@@ -40,4 +40,10 @@
     from t_article_comment_like as t
     where t.user_id = #{userId} and t.comment_id = #{commentId} limit 1;
   </select>
+    <select id="listArticleCommentLikesByCommentIdAndDeadTime"
+            resultMap="BaseResultMap">
+    select id, comment_id, user_id, create_time
+    from t_article_comment_like as t
+      where t.comment_id = #{commentId} and t.create_time >#{deadTime}
+  </select>
 </mapper>

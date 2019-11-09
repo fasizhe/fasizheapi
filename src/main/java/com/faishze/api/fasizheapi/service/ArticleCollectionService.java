@@ -20,4 +20,7 @@ public interface ArticleCollectionService {
 
     //返回收藏者收藏的文章，id降序即收藏时间降序，由新到旧
     Result listArticleCollectionDTOsByCollectorId(Integer userId,Integer pageNume,Integer pageSize);
+
+    //判断该用户是否收藏过该文章
+    Result getArticleCollectionDTOsByUserIdAndArticleId(Integer userId,Integer articleId);
 }
